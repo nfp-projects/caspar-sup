@@ -1,0 +1,23 @@
+{
+  "NODE_ENV": "development",
+  "server": {
+    "port": 3000,
+    "host": "0.0.0.0"
+  },
+  "bunyan": {
+    "name": "keywe",
+    "streams": [{
+        "stream": "process.stdout",
+        "level": "debug"
+      }
+    ]
+  },
+  "knex": {
+    "client": "sqlite3",
+    "connection": {
+      "filename" : "./db.sqlite"
+    },
+    "migrations": {
+    }
+  }
+}

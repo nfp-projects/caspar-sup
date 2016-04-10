@@ -1,0 +1,9 @@
+.root-element {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.root-element-display {
+  opacity: 1;
+  transition: opacity 1s;
+}
