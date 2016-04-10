@@ -1,0 +1,24 @@
+{
+  "name": "caspar-sup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nfp-projects/caspar-sup.git"
+  },
+  "keywords": [
+    "Casparcg",
+    "superimposed",
+    "graphics"
+  ],
+  "author": "Jonatan Nilsson",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/nfp-projects/caspar-sup/issues"
+  },
+  "homepage": "https://github.com/nfp-projects/caspar-sup#readme"
+}
