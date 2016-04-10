@@ -31,3 +31,7 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
+
+db.sqlite
+public/main.js
+public/client.js
