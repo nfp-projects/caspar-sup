@@ -1,19 +1,19 @@
-const socket = require('./socket')
+var socket = require('./socket')
 
-socket.on('client.display', (data) => {
-  let exists = document.getElementById(data.key)
+socket.on('client.display', function(data) {
+  var exists = document.getElementById(data.key)
 
   if (exists) {
     exists.tag.remove()
     exists.remove()
   }
 
-  let element = document.createElement('div')
+  var element = document.createElement('div')
   element.innerHTML = data.html
   element.id = data.key
   element.classList.add('root-element')
 
-  let styleElement = document.createElement('style')
+  var styleElement = document.createElement('style')
   styleElement.setAttribute('type', 'text/css')
   styleElement.innerHTML = data.css
 
@@ -22,18 +22,18 @@ socket.on('client.display', (data) => {
   document.body.appendChild(element)
   document.head.appendChild(styleElement)
 
-  window.setTimeout(() => {
+  window.setTimeout(function (){
     element.classList.add('root-element-display')
   }, 50)
 })
 
-socket.on('client.hide', (data) => {
-  let exists = document.getElementById(data.key)
+socket.on('client.hide', function (data) {
+  var exists = document.getElementById(data.key)
 
   if (exists) {
     exists.classList.remove('root-element-display')
 
-    window.setTimeout(() => {
+    window.setTimeout(function () {
       exists.tag.remove()
       exists.remove()
     }, 1500)

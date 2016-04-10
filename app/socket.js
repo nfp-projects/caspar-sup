@@ -1,5 +1,5 @@
-const io = require('socket.io-client')
+var io = require('socket.io-client')
 
-const socket = io()
+var socket = io()
 
 module.exports = socket
