@@ -18,7 +18,7 @@ function display(data) {
   }
   current.push(data.graphic.name)
 
-  let engine = data.graphic.engine
+  var engine = data.graphic.engine
 
   if (engines[engine]) {
     engines[engine](data)
