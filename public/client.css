@@ -22,6 +22,20 @@ body {
   text-shadow: 2px 2px 1px #000000;
 }
 
+body {
+  font-family: Arial;
+  font-weight: normal;
+  text-shadow: 0px 0px 0px #000000;
+  font-size: 22pt;
+}
+html {
+  overflow: auto;
+}
+div
+{
+  position: absolute;
+}
+
 .root-element {
   opacity: 0;
   transition: opacity 1s;

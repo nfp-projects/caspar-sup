@@ -11,7 +11,7 @@
     "watch-client:js": "watchify app/client.js -o public/client.js --debug",
     "build": "npm run build-main:js && npm run build-client:js",
     "build:watch": "parallelshell \"npm run watch-main:js\" \"npm run watch-client:js\"",
-    "start": "node index.js",
+    "start": "node index.js | bunyan",
     "start:dev": "nodemon index.js | bunyan"
   },
   "repository": {

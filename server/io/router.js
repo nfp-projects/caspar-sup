@@ -2,7 +2,9 @@ import logger from '../../log'
 import { register, newConnection } from './connection'
 
 import * as content from './content/routes'
-import * as store from './store/routes'
+import * as engine from './engine/routes'
+import * as graphic from './graphic/routes'
+import * as preset from './preset/routes'
 
 function onConnection(server, data) {
   const io = server.socket
@@ -16,7 +18,9 @@ function onConnection(server, data) {
   newConnection(ctx)
 
   register(ctx, 'content', content)
-  register(ctx, 'store', store.updateStore)
+  register(ctx, 'engine', engine)
+  register(ctx, 'graphic', graphic)
+  register(ctx, 'preset', preset)
 }
 
 export default onConnection

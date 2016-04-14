@@ -16,12 +16,16 @@ require('./socket')
 require('./controller/store')
 
 const m = require('mithril')
+const Header = require('./controller/header')
 const Menu = require('./controller/menu')
-const Content = require('./controller/content')
+const Add = require('./controller/add')
+const Graphic = require('./controller/graphic/controller')
 
+m.mount(document.getElementById('header'), Header)
 m.mount(document.getElementById('menu'), Menu)
 
 m.route(document.getElementById('content'), '/', {
     '/': {},
-    '/content': Content,
+    '/add': Add,
+    '/graphic/:id': Graphic,
 });

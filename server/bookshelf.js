@@ -37,12 +37,8 @@ shelf.createModel = (attr, opts) => {
       this.on('fetching', this.checkFetching)
     },
 
-    remove() {
-      return this.destroy()
-    },
-
     checkFetching(model, columns, options) {
-      // options.query.where({ is_deleted: false })
+      options.query.where({ is_deleted: false })
     },
   })
 
@@ -52,7 +48,7 @@ shelf.createModel = (attr, opts) => {
       return this.forge(data).save()
     },
 
-    getSingle(id, withRelated = [], required = true) {
+    getSingle(id, withRelated = [], require = true) {
       let where = { id: Number(id) || 0 }
 
       return this.query({ where })
@@ -60,6 +56,8 @@ shelf.createModel = (attr, opts) => {
     },
 
     getAll(where = {}, withRelated = []) {
+      where.is_deleted = false
+
       return this.query({ where })
         .fetchAll({ withRelated })
     },

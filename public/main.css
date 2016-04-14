@@ -1,4 +1,181 @@
-a.button {
-  margin: 0 1rem;
-  width: 10rem;
+body {
+  background: #3f3f41;
+  color: #f1f1f1;
 }
+
+h4 {
+  margin-bottom: 2rem;
+}
+
+/* Container */
+
+  .container {
+    padding: 1rem;
+  }
+
+  .container-header {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    color: #777777;
+  }
+
+  .container-panel {
+    border: 1px solid #3f3f3f;
+    background: #2d2d30;
+    padding: 1rem;
+    border-radius: 5px;
+  }
+
+/* Header */
+
+  .header-list {
+    list-style-type: none;
+    margin: 0;
+  }
+
+  .header-item-hide {
+    float: right;
+    width: 5rem;
+    border-radius: 6px;
+  }
+
+  .header-item-display {
+    background: #070707;
+    color: #eb6e00;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    margin-right: 5.5rem;
+  }
+
+/* Menu */
+
+  .menu-list {
+    list-style-type: none;
+    margin: 0;
+  }
+
+  .menu a {
+    color: #007acc;
+    display: block;
+    border: 1px solid #2d2d30;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .menu a:hover {
+    color: #f1f1f1;
+    border: 1px solid #007acc;
+  }
+
+  .menu-item-add {
+    margin-top: 3rem;
+  }
+
+/* Add */
+
+  .panel-add {
+    padding: 2rem;
+  }
+
+  .panel-graphic-property-add,
+  .panel-graphic-property-remove {
+    width: 100%;
+  }
+
+/* Graphic */
+
+  .panel-graphic-delete {
+    
+  }
+
+  .panel-graphic-settings {
+    float: right;
+    margin-right: 1rem;
+  }
+
+  .panel-graphic-property-item {
+    padding-left: 0;
+  }
+
+  .panel-graphic-preset-add {
+    margin-right: 1rem;
+  }
+
+  .panel-graphic-preset {
+    margin-top: 1rem;
+    list-style-type: none;
+  }
+
+  .panel-graphic-preset a {
+    width: 100%;
+  }
+
+/* Components */
+
+  .error-box {
+    margin: 0rem 0rem 2rem 0;
+    color: #FF0000;
+  }
+
+/* Inputs */
+
+  label {
+    color: #f1f1f1;
+  }
+
+  input[type="text"],
+  textarea {
+    background: #333337;
+    border-color: #3f3f3f;
+    color: #999999;
+    transition-property: none !important;
+  }
+
+  input[type="text"]:hover,
+  textarea:hover {
+    color: #f1f1f1;
+    border-color: #007acc;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus {
+    background: #333337;
+    color: #f1f1f1;
+    border-color: #007acc;
+    box-shadow: none;
+  }
+
+  input[readonly],
+  input[readonly]:hover {
+    background: #2d2d30 !important;
+    border-color: #3f3f3f;
+  }
+
+  select {
+    background: #333337;
+    border-color: #3f3f3f;
+    color: #999999;
+    background-position: right center;
+    background-size: 9px 6px;
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="24" viewBox="0 0 32 24"><polygon points="0,0 32,0 16,24" style="fill: rgb%28138, 138, 138%29"></polygon></svg>')
+  }
+
+  select:hover {
+    color: #f1f1f1;
+    border-color: #007acc;
+  }
+
+  select:focus {
+    background: #333337;
+    color: #f1f1f1;
+    border-color: #007acc;
+    box-shadow: none;
+  }
+
+  select
+
+  a.button {
+    margin: 0 1rem;
+    width: 10rem;
+  }
