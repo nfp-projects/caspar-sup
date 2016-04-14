@@ -44,7 +44,7 @@ socket.on('*', (event, data) => {
     storage[name] = data
     events[name]()
   }
-  if (event.contains('single')) {
+  if (event.indexOf('single') >= 0) {
     let check = event.replace('single', 'all')
     if (events[name]) {
       let index = _.findIndex(storage[check], { id: data.id })
