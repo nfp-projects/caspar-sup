@@ -33,10 +33,15 @@ h4 {
     margin: 0;
   }
 
+  .header-item {
+    margin-bottom: 1rem;
+  }
+
   .header-item-hide {
     float: right;
     width: 5rem;
     border-radius: 6px;
+    margin: 0;
   }
 
   .header-item-display {
