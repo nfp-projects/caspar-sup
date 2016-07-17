@@ -123,6 +123,10 @@ h4 {
 
 /* Inputs */
 
+  .panel-graphic-property-item input {
+    display: inline-block;
+  }
+
   label {
     color: #f1f1f1;
   }
@@ -178,9 +182,60 @@ h4 {
     box-shadow: none;
   }
 
-  select
-
   a.button {
-    margin: 0 1rem;
-    width: 10rem;
+    margin: 0 1rem 0 0;
+    width: 7rem;
+  }
+
+/* Media queries */
+
+  body {
+    font-size: 1.5rem;
+  }
+
+  @media only screen and (max-device-width: 1280px) {
+    .header-item-hide {
+      width: 9rem;
+      line-height: 0rem;
+    }
+
+    a.button {
+      font-size: 2rem;
+      line-height: 0;
+      width: auto;
+    }
+
+    .panel-graphic-preset {
+      margin: 0;
+    }
+
+    .panel-graphic-display,
+    .panel-graphic-preset-add {
+      margin-bottom: 3rem !important;
+    }
+
+    .panel-graphic-preset-remove {
+      padding-right: 0.5rem;
+      padding-left: 0.5rem;
+    }
+
+    .panel-graphic-preset-remove.alert {
+      padding-right: 1rem;
+      padding-left: 1rem;
+    }
+
+    .panel-graphic-settings {
+      font-size: 1.3rem !important;
+    }
+
+    .header-item-display {
+      font-size: 2rem;
+      margin-right: 12.5rem;
+      padding: 0.2rem 1rem;
+    }
+
+    .panel-graphic-property-item input {
+      font-size: 2rem;
+      height: 3.5rem;
+    }
   }
