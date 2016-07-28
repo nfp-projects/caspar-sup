@@ -18,15 +18,15 @@ exports.presetOnlyList = function(vm) {
               value: item.values[graphic.settings.main],
             })
           ),
-          m('div', { class: 'small-2 columns' },
-            m('a.panel-graphic-preset-remove.button.success', {
-              onclick: vm.displayPreset.bind(vm, item),
-            }, 'Display')
-          ),
-          m('div', { class: 'small-2 columns' },
-            m('a.panel-graphic-preset-remove.button.alert', {
-              onclick: vm.removePreset.bind(vm, item),
-            }, 'Remove')
+          m('div', { class: 'small-4 columns' },
+            [
+              m('a.panel-graphic-preset-remove.button.success', {
+                onclick: vm.displayPreset.bind(vm, item),
+              }, 'Display'),
+              m('a.panel-graphic-preset-remove.button.alert', {
+                onclick: vm.removePreset.bind(vm, item),
+              }, 'X')
+            ]
           ),
         ])
       ])
@@ -38,10 +38,10 @@ exports.presetButtons = function(vm) {
   return [
     m('a.panel-graphic-preset-add.button', {
       onclick: vm.addPreset.bind(vm),
-    }, 'Save to preset list'),
+    }, 'Save Preset'),
     m('a.panel-graphic-display.success.button', {
       onclick: vm.displayCurrent.bind(vm),
-    }, 'Display'),
+    }, 'Display Live'),
   ]
 }
 
