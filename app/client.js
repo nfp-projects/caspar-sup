@@ -3,6 +3,7 @@ var socket = require('./socket')
 var engines = {
   text: require('./frontend/text'),
   countdown: require('./frontend/countdown'),
+  schedule: require('./frontend/schedule'),
 }
 
 var current = []

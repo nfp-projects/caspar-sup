@@ -5,6 +5,7 @@ const components = require('../components')
 const engines = {
   text: require('./engine/text'),
   countdown: require('./engine/countdown'),
+  schedule: require('./engine/schedule'),
 }
 
 Graphic.view = function(ctrl) {

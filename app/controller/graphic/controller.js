@@ -11,6 +11,7 @@ const Graphic = createModule({
     this.currentView = 'view'
     this.current = {}
     this.newProperty = m.prop('')
+    this.newTextField = m.prop('')
   },
 
   updated: function(name, variable, control) {
@@ -25,24 +26,51 @@ const Graphic = createModule({
     }
   },
 
-  addProperty: function() {
-    if (!this.newProperty()) {
-      this.error = 'Please type in property name'
-      return
-    }
-    if (this.graphic.settings.properties.includes(this.newProperty())) {
-      this.error = 'A property with that name already exists'
-      return
+  addDataField: function(type, name) {
+    if (!name) {
+      return 'Please type in proper name'
     }
 
-    this.graphic.settings.properties.push(this.newProperty())
-    this.newProperty('')
-
-    if (!this.graphic.settings.main) {
-      this.graphic.settings.main = this.graphic.settings.properties[0]
+    if (this.graphic.settings[type].includes(name)) {
+      return 'A property with that name already exists'
     }
+
+    this.graphic.settings[type].push(name)
 
     socket.emit('graphic.update', this.graphic)
+
+    return null
+  },
+
+  addProperty: function() {
+    this.error = this.addDataField('properties', this.newProperty())
+
+    if (!this.error) {
+      this.newProperty('')
+
+      if (!this.graphic.settings.main) {
+        this.graphic.settings.main = this.graphic.settings.properties[0]
+        socket.emit('graphic.update', this.graphic)
+      }
+    }
+  },
+
+  addTextField: function() {
+    this.error = this.addDataField('textfields', this.newTextField())
+
+    if (!this.error) {
+      this.newTextField('')
+    }
+  },
+
+  removeDataField: function(type, name) {
+    this.graphic.settings[type].splice(
+      this.graphic.settings[type].indexOf(name), 1)
+    socket.emit('graphic.update', this.graphic)
+  },
+
+  removeProperty: function(prop) {
+    this.removeDataField('properties', prop)
   },
 
   cleanCurrent: function() {
@@ -114,12 +142,6 @@ const Graphic = createModule({
       graphic: this.graphic,
       data: this.current,
     })
-  },
-
-  removeProperty: function(prop) {
-    this.graphic.settings.properties.splice(
-      this.graphic.settings.properties.indexOf(prop), 1)
-    socket.emit('graphic.update', this.graphic)
   },
 
   switchView: function() {

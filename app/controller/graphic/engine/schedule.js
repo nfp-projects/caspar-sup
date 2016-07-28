@@ -5,6 +5,9 @@ exports.view = function(ctlr, graphic, vm) {
   if (!graphic.settings.properties) {
     graphic.settings.properties = []
   }
+  if (!graphic.settings.textfields) {
+    graphic.settings.textfields = []
+  }
   if (graphic.settings.properties.length === 0) {
     return [
       m('p', 'No properties have been defined.'),
@@ -19,6 +22,16 @@ exports.view = function(ctlr, graphic, vm) {
         m('input[type=text]', {
           value: vm.current[prop] || '',
           oninput: vm.updated.bind(vm, prop, 'current'),
+        }),
+      ])
+    ),
+    graphic.settings.textfields.map((prop, index) =>
+      m('label', { key: index }, [
+        prop,
+        m('textarea', {
+          rows: '6',
+          oninput: vm.updated.bind(vm, prop, 'current'),
+          value: vm.current[prop] || '',
         }),
       ])
     ),
@@ -42,6 +55,10 @@ exports.settings = function(cltr, graphic, vm) {
           graphic.settings.properties.map(prop =>
             `<%- ${prop} %>`
           ).join(', '),
+          ', ',
+          graphic.settings.textfields.map(prop =>
+            `<%- ${prop} %>`
+          ).join(', '),
         ')',
       m('p', `<div id="${graphic.name}">`),
       m('textarea', {
@@ -59,8 +76,10 @@ exports.settings = function(cltr, graphic, vm) {
         value: graphic.settings.css || '',
       })
     ]),
+    /* -------- Simple Properties -------- */
+    m('label', 'Simple Properties'),
     m('label', [
-      'Main property',
+      'Main',
       m('select', {
         onchange: vm.updated.bind(vm, 'settings.main'),
       }, graphic.settings.properties.map((prop, index) =>
@@ -71,7 +90,8 @@ exports.settings = function(cltr, graphic, vm) {
         }, prop)
       ))
     ]),
-    m('label', 'Properties'),
+    /* -------- Simple Properties List -------- */
+    m('label', 'List'),
     m('div', [
       graphic.settings.properties.map((prop, index) =>
         m('.row', { key: 'add-prop-' + index }, [
@@ -102,6 +122,39 @@ exports.settings = function(cltr, graphic, vm) {
         }, 'Add')
       ),
     ]),
+    /* -------- Text Properties -------- */
+    m('label', 'Text Fields'),
+    m('div', [
+      graphic.settings.textfields.map((prop, index) =>
+        m('.row', { key: 'add-prop-' + index }, [
+          m('div', { class: 'small-10 columns panel-graphic-property-item' },
+            m('input[type=text]', {
+              readonly: true,
+              value: prop,
+            })
+          ),
+          m('div', { class: 'small-2 columns' },
+            m('a.panel-graphic-property-remove.button.alert', {
+              onclick: vm.removeDataField.bind(vm, 'textfields', prop),
+            }, 'Remove')
+          )
+        ])
+      ),
+    ]),
+    m('.row', [
+      m('div', { class: 'small-10 columns panel-graphic-property-item' },
+        m('input[type=text]', {
+          value: vm.newTextField(),
+          oninput: m.withAttr('value', vm.newTextField),
+        })
+      ),
+      m('div', { class: 'small-2 columns' },
+        m('a.panel-graphic-property-add.button', {
+          onclick: vm.addTextField.bind(vm),
+        }, 'Add')
+      ),
+    ]),
+    /* -------- Delete -------- */
     m('a.panel-graphic-delete.button.alert', {
       onclick: vm.remove.bind(vm),
     }, 'Delete graphic'),
