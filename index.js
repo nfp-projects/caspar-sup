@@ -31,7 +31,7 @@ log.info('Running database integrity scan.')
 let setup = require('./script/setup')
 
 setup().then(() => {
-  require('./server')
+  require('./api')
 }).catch((error) => {
   log.error(error, 'Error while preparing database')
   process.exit(1)
