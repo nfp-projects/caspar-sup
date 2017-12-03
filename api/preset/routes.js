@@ -1,16 +1,11 @@
 import Preset from './model'
 
-function getSocket(ctx, all) {
-  if (all === true) return ctx.io
-  return ctx.socket
-}
-
-export async function all(ctx, payload, all) {
+export async function all(ctx, payload) {
   let id = Number(payload.graphic_id || payload.id)
 
   let data = await Preset.getAll({ graphic_id: id })
 
-  getSocket(ctx, all).emit(`preset.all:${id}`, data.toJSON())
+  ctx.io.emit(`preset.all:${id}`, data.toJSON())
 }
 
 export async function add(ctx, payload) {
@@ -29,7 +24,7 @@ export async function add(ctx, payload) {
 
   await Preset.create(payload)
 
-  await all(ctx, payload, true)
+  await all(ctx, payload)
 }
 
 export async function remove(ctx, payload) {
@@ -39,5 +34,5 @@ export async function remove(ctx, payload) {
 
   await preset.save()
 
-  await all(ctx, payload, true)
+  await all(ctx, payload)
 }

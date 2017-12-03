@@ -6,10 +6,6 @@ import config from '../config'
 import log from '../log'
 
 let host = config.get('knex:connection')
-/* istanbul ignore if  */
-if (host.match && host.match(/@[^/]+/)) {
-  host = host.match(/@[^/]+/)[0]
-}
 
 log.info(host, 'Connecting to DB')
 
@@ -33,10 +29,26 @@ let shelf = bookshelf(client)
 shelf.createModel = (attr, opts) => {
   // Create default attributes to all models
   let attributes = _.defaults(attr, {
+    /**
+     * Initialize a new instance of model. This does not get called when
+     * relations to this model is being fetched though.
+     */
     initialize() {
       this.on('fetching', this.checkFetching)
     },
 
+    /**
+     * Event handler when fetch() is called. This gets called for both
+     * when getSingle() or just manual fetch() is called as well as
+     * when relation models through belongsTo() resources get fetched.
+     *
+     * @param {Model} model - The model instance if fetch() was used. For
+     *                        belongsTo this is the relation model thingy.
+     * @param {Array} columns - Array of columns to select if fetch() was used.
+     *                          Otherwise this is null.
+     * @param {Object} options - Options for the fetch. Includes the query
+     *                           builder object.
+     */
     checkFetching(model, columns, options) {
       options.query.where({ is_deleted: false })
     },
@@ -44,6 +56,12 @@ shelf.createModel = (attr, opts) => {
 
   // Create default options for all models
   let options = _.defaults(opts, {
+    /**
+     * Create new model object in database.
+     *
+     * @param {Object} data - The values the new model should have
+     * @return {Model} The resulted model
+     */
     create(data) {
       return this.forge(data).save()
     },

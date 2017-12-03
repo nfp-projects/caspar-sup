@@ -2,240 +2,189 @@ body {
   background: #3f3f41;
   color: #f1f1f1;
 }
-
 h4 {
   margin-bottom: 2rem;
 }
-
 /* Container */
-
-  .container {
-    padding: 1rem;
-  }
-
-  .container-header {
-    font-size: 1.5rem;
-    margin-left: 1rem;
-    color: #777777;
-  }
-
-  .container-panel {
-    border: 1px solid #3f3f3f;
-    background: #2d2d30;
-    padding: 1rem;
-    border-radius: 5px;
-  }
-
+.container {
+  padding: 1rem;
+}
+.container-header {
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  color: #777;
+}
+.container-panel {
+  border: 1px solid #3f3f3f;
+  background: #2d2d30;
+  padding: 1rem;
+  border-radius: 5px;
+}
 /* Header */
-
-  .header-list {
-    list-style-type: none;
-    margin: 0;
-  }
-
-  .header-item {
-    margin-bottom: 1rem;
-  }
-
-  .header-item-hide {
-    float: right;
-    width: 5rem;
-    border-radius: 6px;
-    margin: 0;
-  }
-
-  .header-item-display {
-    background: #070707;
-    color: #eb6e00;
-    border-radius: 6px;
-    padding: 0.5rem 1rem;
-    margin-right: 5.5rem;
-  }
-
+.header-list {
+  list-style-type: none;
+  margin: 0;
+}
+.header-item {
+  margin-bottom: 1rem;
+}
+.header-item-hide {
+  float: right;
+  width: 5rem;
+  border-radius: 6px;
+  margin: 0;
+}
+.header-item-display {
+  background: #070707;
+  color: #eb6e00;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  margin-right: 5.5rem;
+}
 /* Menu */
-
-  .menu-list {
-    list-style-type: none;
+.menu-list {
+  list-style-type: none;
+  margin: 0;
+}
+.menu a {
+  color: #007acc;
+  display: block;
+  border: 1px solid #2d2d30;
+  padding: 0.2rem 0.5rem;
+}
+.menu a:hover {
+  color: #f1f1f1;
+  border: 1px solid #007acc;
+}
+.menu-item-add {
+  margin-top: 3rem;
+}
+/* Add */
+.panel-add {
+  padding: 2rem;
+}
+.panel-graphic-property-add,
+.panel-graphic-property-remove {
+  width: 100%;
+}
+/* Graphic */
+.panel-graphic-settings {
+  float: right;
+  margin-right: 1rem;
+}
+.panel-graphic-property-item {
+  padding-left: 0;
+}
+.panel-graphic-preset-add {
+  margin-right: 1rem;
+}
+.panel-graphic-preset {
+  margin-top: 1rem;
+  list-style-type: none;
+}
+.panel-graphic-preset a {
+  width: 100%;
+}
+/* Components */
+.error-box {
+  margin: 0rem 0rem 2rem 0;
+  color: #f00;
+}
+/* Inputs */
+.panel-graphic-property-item input {
+  display: inline-block;
+}
+label {
+  color: #f1f1f1;
+}
+input[type="text"],
+textarea {
+  background: #333337;
+  border-color: #3f3f3f;
+  color: #999;
+  transition-property: none !important;
+}
+input[type="text"]:hover,
+textarea:hover {
+  color: #f1f1f1;
+  border-color: #007acc;
+}
+input[type="text"]:focus,
+textarea:focus {
+  background: #333337;
+  color: #f1f1f1;
+  border-color: #007acc;
+  box-shadow: none;
+}
+input[readonly],
+input[readonly]:hover {
+  background: #2d2d30 !important;
+  border-color: #3f3f3f;
+}
+select {
+  background: #333337;
+  border-color: #3f3f3f;
+  color: #999;
+  background-position: right center;
+  background-size: 9px 6px;
+  background-origin: content-box;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="24" viewBox="0 0 32 24"><polygon points="0,0 32,0 16,24" style="fill: rgb%28138, 138, 138%29"></polygon></svg>");
+}
+select:hover {
+  color: #f1f1f1;
+  border-color: #007acc;
+}
+select:focus {
+  background: #333337;
+  color: #f1f1f1;
+  border-color: #007acc;
+  box-shadow: none;
+}
+a.button {
+  margin: 0 1rem 0 0;
+  width: 7rem;
+}
+/* Media queries */
+body {
+  font-size: 1.5rem;
+}
+@media only screen and (max-device-width: 1280px) {
+  .header-item-hide {
+    width: 9rem;
+    line-height: 0rem;
+  }
+  a.button {
+    font-size: 2rem;
+    line-height: 0;
+    width: auto;
+  }
+  .panel-graphic-preset {
     margin: 0;
   }
-
-  .menu a {
-    color: #007acc;
-    display: block;
-    border: 1px solid #2d2d30;
-    padding: 0.2rem 0.5rem;
-  }
-
-  .menu a:hover {
-    color: #f1f1f1;
-    border: 1px solid #007acc;
-  }
-
-  .menu-item-add {
-    margin-top: 3rem;
-  }
-
-/* Add */
-
-  .panel-add {
-    padding: 2rem;
-  }
-
-  .panel-graphic-property-add,
-  .panel-graphic-property-remove {
-    width: 100%;
-  }
-
-/* Graphic */
-
-  .panel-graphic-delete {
-    
-  }
-
-  .panel-graphic-settings {
-    float: right;
-    margin-right: 1rem;
-  }
-
-  .panel-graphic-property-item {
-    padding-left: 0;
-  }
-
+  .panel-graphic-display,
   .panel-graphic-preset-add {
-    margin-right: 1rem;
+    margin-bottom: 3rem !important;
   }
-
-  .panel-graphic-preset {
-    margin-top: 1rem;
-    list-style-type: none;
+  .panel-graphic-preset-remove {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
   }
-
-  .panel-graphic-preset a {
-    width: 100%;
+  .panel-graphic-preset-remove.alert {
+    padding-right: 1rem;
+    padding-left: 1rem;
   }
-
-/* Components */
-
-  .error-box {
-    margin: 0rem 0rem 2rem 0;
-    color: #FF0000;
+  .panel-graphic-settings {
+    font-size: 1.3rem !important;
   }
-
-/* Inputs */
-
+  .header-item-display {
+    font-size: 2rem;
+    margin-right: 12.5rem;
+    padding: 0.2rem 1rem;
+  }
   .panel-graphic-property-item input {
-    display: inline-block;
+    font-size: 2rem;
+    height: 3.5rem;
   }
-
-  label {
-    color: #f1f1f1;
-  }
-
-  input[type="text"],
-  textarea {
-    background: #333337;
-    border-color: #3f3f3f;
-    color: #999999;
-    transition-property: none !important;
-  }
-
-  input[type="text"]:hover,
-  textarea:hover {
-    color: #f1f1f1;
-    border-color: #007acc;
-  }
-
-  input[type="text"]:focus,
-  textarea:focus {
-    background: #333337;
-    color: #f1f1f1;
-    border-color: #007acc;
-    box-shadow: none;
-  }
-
-  input[readonly],
-  input[readonly]:hover {
-    background: #2d2d30 !important;
-    border-color: #3f3f3f;
-  }
-
-  select {
-    background: #333337;
-    border-color: #3f3f3f;
-    color: #999999;
-    background-position: right center;
-    background-size: 9px 6px;
-    background-origin: content-box;
-    background-repeat: no-repeat;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="24" viewBox="0 0 32 24"><polygon points="0,0 32,0 16,24" style="fill: rgb%28138, 138, 138%29"></polygon></svg>')
-  }
-
-  select:hover {
-    color: #f1f1f1;
-    border-color: #007acc;
-  }
-
-  select:focus {
-    background: #333337;
-    color: #f1f1f1;
-    border-color: #007acc;
-    box-shadow: none;
-  }
-
-  a.button {
-    margin: 0 1rem 0 0;
-    width: 7rem;
-  }
-
-/* Media queries */
-
-  body {
-    font-size: 1.5rem;
-  }
-
-  @media only screen and (max-device-width: 1280px) {
-    .header-item-hide {
-      width: 9rem;
-      line-height: 0rem;
-    }
-
-    a.button {
-      font-size: 2rem;
-      line-height: 0;
-      width: auto;
-    }
-
-    .panel-graphic-preset {
-      margin: 0;
-    }
-
-    .panel-graphic-display,
-    .panel-graphic-preset-add {
-      margin-bottom: 3rem !important;
-    }
-
-    .panel-graphic-preset-remove {
-      padding-right: 0.5rem;
-      padding-left: 0.5rem;
-    }
-
-    .panel-graphic-preset-remove.alert {
-      padding-right: 1rem;
-      padding-left: 1rem;
-    }
-
-    .panel-graphic-settings {
-      font-size: 1.3rem !important;
-    }
-
-    .header-item-display {
-      font-size: 2rem;
-      margin-right: 12.5rem;
-      padding: 0.2rem 1rem;
-    }
-
-    .panel-graphic-property-item input {
-      font-size: 2rem;
-      height: 3.5rem;
-    }
-  }
+}
+/*# sourceMappingURL=main.css.map */

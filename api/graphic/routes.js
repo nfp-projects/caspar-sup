@@ -1,17 +1,12 @@
 import Graphic from './model'
 
-function getSocket(ctx, all) {
-  if (all === true) return ctx.io
-  return ctx.socket
-}
-
-export async function all(ctx, all) {
+export async function all(ctx) {
   let data = await Graphic.getAll()
 
-  getSocket(ctx, all).emit('graphic.all', data.toJSON())
+  ctx.io.emit('graphic.all', data.toJSON())
 }
 
-export async function single(ctx, data, all) {
+export async function single(ctx, data) {
   if (!data || !data.id) {
     ctx.log.warn('called graphic get single but no id specified')
     return
@@ -19,7 +14,7 @@ export async function single(ctx, data, all) {
 
   let graphic = await Graphic.getSingle(data.id)
 
-  getSocket(ctx, all).emit('graphic.single', graphic.toJSON())
+  ctx.io.emit('graphic.single', graphic.toJSON())
 }
 
 export async function create(ctx, data) {
@@ -33,7 +28,7 @@ export async function create(ctx, data) {
 
   await Graphic.create(data)
   
-  await all(ctx, true)
+  await all(ctx)
 }
 
 export async function remove(ctx, data) {
@@ -46,7 +41,7 @@ export async function remove(ctx, data) {
   graphic.set({ is_deleted: true })
   await graphic.save()
 
-  await all(ctx, true)
+  await all(ctx)
 }
 
 export async function update(ctx, data) {
@@ -61,5 +56,5 @@ export async function update(ctx, data) {
 
   await graphic.save()
 
-  await single(ctx, data, true)
+  await single(ctx, data)
 }

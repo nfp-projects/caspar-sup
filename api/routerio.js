@@ -1,5 +1,6 @@
-import logger from '../../log'
-import { register, newConnection } from './connection'
+import logger from '../log'
+import { register } from './io/helper'
+import { contentConnection } from './content/connection'
 
 import * as content from './content/routes'
 import * as engine from './engine/routes'
@@ -15,7 +16,7 @@ function onConnection(server, data) {
 
   let ctx = { io, socket, log }
 
-  newConnection(ctx)
+  contentConnection(ctx)
 
   register(ctx, 'content', content)
   register(ctx, 'engine', engine)

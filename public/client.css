@@ -1,47 +1,53 @@
 * {
   -webkit-box-sizing: border-box;
-  box-sizing:border-box;                      /* This sets all elements to be the actual set dimensions, disregarding padding and borders */
- /* -webkit-backface-visibility: hidden;        /* Hide the backface of elements - useful for 3d effects */
-  -webkit-transition: translate3d(0,0,0);     /* Turns on hardware acceleration - not known to be of benefit in CCG, but won't hurt */
+  box-sizing: border-box;
+/* This sets all elements to be the actual set dimensions, disregarding padding and borders */
+/* -webkit-backface-visibility: hidden;        /* Hide the backface of elements - useful for 3d effects */
+  -webkit-transition: translate3d(0, 0, 0); /* Turns on hardware acceleration - not known to be of benefit in CCG, but won't hurt */
 }
-html, body {
-  width:1920px;                                            /* Set to your channel's resolution */
-  height:1080px;                                           /* Set to your channel's resolution */
-  margin:0;                                                /* Use all available space */
-  padding:0;                                               /* Use all available space */
-  background:transparent;                                  /* The HTML consumer actually makes your background transparent by default, unless a color or image is specified - but this might be usefull when debugging in browsers */
-  overflow:hidden;                                         /* Hide any overflowing elements - to disable scollbars */
-  -webkit-font-smoothing:antialiased !important;           /* Set aliasing of fonts - possible options: none, antialiased,  subpixel-antialiased */
+html,
+body {
+  width: 1920px;
+/* Set to your channel's resolution */
+  height: 1080px;
+/* Set to your channel's resolution */
+  margin: 0;
+/* Use all available space */
+  padding: 0;
+/* Use all available space */
+  background: transparent;
+/* The HTML consumer actually makes your background transparent by default, unless a color or image is specified - but this might be usefull when debugging in browsers */
+  overflow: hidden;
+/* Hide any overflowing elements - to disable scollbars */
+  -webkit-font-smoothing: antialiased !important;
+/* Set aliasing of fonts - possible options: none, antialiased,  subpixel-antialiased */
 }
 body {
-  font-family: Calibri,Arial;
+  font-family: Calibri, Arial;
   font-size: 40px;
-  color: #FFFFFF;
-  /* -webkit-text-stroke-width: 0.5px;
+  color: #fff;
+/* -webkit-text-stroke-width: 0.5px;
   -webkit-text-stroke-color: #888888;
   text-shadow: 2px 2px 1px #000000; */
 }
-
 body {
   font-family: Arial;
   font-weight: normal;
-  text-shadow: 0px 0px 0px #000000;
+  text-shadow: 0px 0px 0px #000;
   font-size: 22pt;
 }
 html {
   overflow: auto;
 }
-body > div
-{
+body > div {
   position: absolute;
 }
-
 .root-element {
   opacity: 0;
   transition: opacity 1s;
 }
-
 .root-element-display {
   opacity: 1;
   transition: opacity 1s;
 }
+/*# sourceMappingURL=client.css.map */

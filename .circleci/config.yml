@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: circleci/node:latest
     working_directory: ~/caspar-sup
     steps:
       - checkout
@@ -11,14 +11,15 @@ jobs:
           name: Build docker image
           command: docker build -t nfpis/caspar-sup:build_${CIRCLE_BUILD_NUM} -t nfpis/caspar-sup:${CIRCLE_SHA1} -t nfpis/caspar-sup:latest .
       - run:
+          name: Run test and lint
+          command: |
+            docker run nfpis/recording_control npm run lint
+            docker run nfpis/recording_control npm run test
+      - deploy:
           name: Push to docker
           command: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push nfpis/caspar-sup
-      - deploy:
-          name: Deploy to production
-          command: |
-            echo Not implemented
 workflows:
   version: 2
   build_deploy:

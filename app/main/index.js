@@ -12,14 +12,15 @@
 //in the console. 
 window.components = {}
 
-require('./socket')
-require('./controller/store')
+require('../socket')
+require('./store')
 
 const m = require('mithril')
-const Header = require('./controller/header')
-const Menu = require('./controller/menu')
-const Add = require('./controller/add')
-const Graphic = require('./controller/graphic/controller')
+const Header = require('./header')
+const Menu = require('./menu')
+
+const Add = require('./add')
+const Graphic = require('./graphic')
 
 m.mount(document.getElementById('header'), Header)
 m.mount(document.getElementById('menu'), Menu)
