@@ -1,5 +1,5 @@
 
-module.exports = function(data) {
+module.exports.init = function(data) {
   var element = document.createElement('div')
   element.innerHTML = data.html
   element.id = data.graphic.name
@@ -17,4 +17,8 @@ module.exports = function(data) {
   window.setTimeout(function (){
     element.classList.add('root-element-display')
   }, 100)
+}
+
+module.exports.update = function() {
+  
 }

@@ -1,5 +1,48 @@
 
-module.exports = function(data) {
+var currentActiveTimer = null
+
+function pad(n) { return (n < 10) ? ('0' + n) : n }
+
+function timer(name) {
+  var days = 0
+  var hours = 0
+  var mins = 0
+  var secs = 0
+
+  var now = new Date()
+
+  var timeElement = document.getElementById(name + '-countdown-timer')
+
+  if (!timeElement) {
+    clearInterval(currentActiveTimer)
+    currentActiveTimer = null
+    return
+  }
+
+  var data = timeElement.tag
+  var time = data.time
+  var difference = (time - now)
+
+  if (difference <= 0) {
+    clearInterval(currentActiveTimer)
+    currentActiveTimer = null
+    timeElement.innerHTML = data.data.finished || ''
+    return
+  }
+
+  days = Math.floor(difference / (60 * 60 * 1000 * 24) * 1)
+  hours = Math.floor((difference % (60 * 60 * 1000 * 24)) / (60 * 60 * 1000) )
+  mins = Math.floor(((difference % (60 * 60 * 1000 * 24)) % (60 * 60 * 1000)) / (60 * 1000) * 1)
+  secs = Math.floor((((difference % (60 * 60 * 1000 * 24)) % (60 * 60 * 1000)) % (60 * 1000)) / 1000 * 1)
+
+  var text = pad(hours) + ':' + pad(mins) + ':' + pad(secs)
+  if (days > 0) {
+    text = days.toString() + ' dag' + (days > 1 && 'a' || '') + ' ' + text
+  }
+  timeElement.innerHTML = text
+}
+
+module.exports.init = function(data) {
   var element = document.createElement('div')
   element.innerHTML = data.html
   element.id = data.graphic.name
@@ -18,50 +61,19 @@ module.exports = function(data) {
     element.classList.add('root-element-display')
   }, 100)
 
+  module.exports.update(data)
+}
+
+module.exports.update = function(data) {
   var timeElement = document.getElementById(data.graphic.name + '-countdown-timer')
-  var time = new Date(data.data.countdown.replace(' ', 'T'))
-
-  function pad(n) { return (n < 10) ? ('0' + n) : n }
-
-  function timer() {
-    var days = 0
-    var hours = 0
-    var mins = 0
-    var secs = 0
-
-    now = new Date()
-    difference = (time - now)
-
-    timeElement = document.getElementById(data.graphic.name + '-countdown-timer')
-
-    if (difference < 0 || !timeElement) {
-      clearInterval(data.timer)
-      if (timeElement) {
-        timeElement.innerHTML = data.data.finished || ''
-      }
-      return
-    }
-
-    if (timeElement.tag !== time) {
-      clearInterval(data.timer)
-      return
-    }
-
-    days = Math.floor(difference / (60 * 60 * 1000 * 24) * 1);
-    hours = Math.floor((difference % (60 * 60 * 1000 * 24)) / (60 * 60 * 1000) );
-    mins = Math.floor(((difference % (60 * 60 * 1000 * 24)) % (60 * 60 * 1000)) / (60 * 1000) * 1);
-    secs = Math.floor((((difference % (60 * 60 * 1000 * 24)) % (60 * 60 * 1000)) % (60 * 1000)) / 1000 * 1);
-
-    var text = pad(hours) + ':' + pad(mins) + ':' + pad(secs);
-    if (days > 0) {
-      text = days.toString() + ' dag' + (days > 1 && 'a' || '') + ' ' + text;
-    }
-    timeElement.innerHTML = text
-  }
-
+  data.time = new Date(data.data.countdown.replace(' ', 'T'))
+  
   if (timeElement) {
-    timeElement.tag = time
-    timer()
-    data.timer = setInterval(timer, 1000)
+    timeElement.tag = data
+    timer(data.graphic.name)
+    if (currentActiveTimer) {
+      clearInterval(currentActiveTimer)
+    }
+    currentActiveTimer = setInterval(timer.bind(null, data.graphic.name), 1000)
   }
 }

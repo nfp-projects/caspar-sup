@@ -5,6 +5,7 @@ const events = {}
 
 // Listen on all events
 let onevent = socket.onevent
+let disconnected = false
 
 socket.onevent = function(packet) {
   let args = packet.data || []
@@ -12,6 +13,25 @@ socket.onevent = function(packet) {
   packet.data = ['*'].concat(args)
   onevent.call(this, packet)
 }
+
+socket.on('disconnect', () => {
+  disconnected = true
+})
+
+socket.on('connect', () => {
+  if (disconnected) {
+    Object.keys(events).forEach(event => {
+      let name = event
+      let id = null
+      if (event.indexOf(':') > 0) {
+        name = event.split(':')[0]
+        id = Number(event.split(':')[1])
+      }
+      socket.emit(name, { id: id })
+    })
+  }
+  disconnected = false
+})
 
 function genId(name, id) {
   if (id) {
@@ -21,6 +41,10 @@ function genId(name, id) {
 }
 
 const store = {
+  getId: function(name, id) {
+    return genId(name, id)
+  },
+
   get: function(name, id) {
     return storage[genId(name, id)]
   },
@@ -39,18 +63,24 @@ const store = {
 }
 
 socket.on('*', (event, data) => {
-  let name = genId(event, data && data.id)
+  let id = data && data.id
+
+  let name = genId(event, id)
+
   if (events[name]) {
     storage[name] = data
     events[name]()
   }
   if (event.indexOf('single') >= 0) {
     let check = event.replace('single', 'all')
-    if (events[name]) {
+    if (events[check]) {
       let index = _.findIndex(storage[check], { id: data.id })
       if (index > -1) {
         storage[check][index] = data
-        events[name]()
+        events[check]()
+      } else {
+        storage[check].push(data)
+        events[check]()
       }
     }
   }

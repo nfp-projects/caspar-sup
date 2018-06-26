@@ -3,7 +3,7 @@ import Preset from './model'
 export async function all(ctx, payload) {
   let id = Number(payload.graphic_id || payload.id)
 
-  let data = await Preset.getAll({ graphic_id: id })
+  let data = await Preset.getAll({ graphic_id: id }, [], 'sort')
 
   ctx.io.emit(`preset.all:${id}`, data.toJSON())
 }
@@ -25,6 +25,18 @@ export async function add(ctx, payload) {
   await Preset.create(payload)
 
   await all(ctx, payload)
+}
+
+export async function patch(ctx, payload) {
+  await Promise.all(payload.map(async item => {
+    let preset = await Preset.getSingle(item.id)
+
+    preset.set({ sort: item.sort })
+
+    await preset.save()
+  }))
+
+  await all(ctx, payload[0])
 }
 
 export async function remove(ctx, payload) {

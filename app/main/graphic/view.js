@@ -1,6 +1,5 @@
 const m = require('mithril')
-const Graphic = require('./controller')
-const components = require('../components')
+const components = require('../common/components')
 
 const engines = {
   text: require('./engine/text'),
@@ -8,21 +7,20 @@ const engines = {
   schedule: require('./engine/schedule'),
 }
 
-Graphic.view = function(ctrl) {
-  graphic = Graphic.vm.graphic
+module.exports = function() {
+  let graphic = this.graphic
+  let currentView = graphic.engine && engines[graphic.engine][this.currentView] || null
 
-  return m('div', [
-    m('h3.container-header', 'Graphic'),
-    m('div.container-panel.panel-graphic', 
-      !graphic.name && m('p', 'Loading...') ||
-      [
-        m('a.panel-graphic-settings.button', {
-          onclick: Graphic.vm.switchView
-        }, Graphic.vm.currentView === 'view' && 'Settings' || 'Control'),
-        m('h4', graphic.name),
-        components.error(Graphic.vm.error),
-        engines[graphic.engine][Graphic.vm.currentView](ctrl, graphic, Graphic.vm),
-      ]
-    ),
-  ])
+  return [
+    m('h4.header', 'Graphic'),
+    m('header', [
+      m('h3', graphic.name),
+      m('button', {
+        onclick: () => this.switchView(),
+      }, this.changeViewTitle()),
+    ]),
+    components.error(this.error),
+    !currentView && m('p', 'Loading...')
+                  || currentView(this, graphic),
+  ]
 }

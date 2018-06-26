@@ -19,14 +19,15 @@ const m = require('mithril')
 const Header = require('./header')
 const Menu = require('./menu')
 
-const Add = require('./add')
-const Graphic = require('./graphic')
+const Add = require('./add/module')
+const Graphic = require('./graphic/module')
+const Dagskra = require('./dagskra/module')
 
 m.mount(document.getElementById('header'), Header)
 m.mount(document.getElementById('menu'), Menu)
 
 m.route(document.getElementById('content'), '/', {
-    '/': {},
+    '/': Dagskra,
     '/add': Add,
     '/graphic/:id': Graphic,
-});
+})

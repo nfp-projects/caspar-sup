@@ -6,23 +6,21 @@ var engines = {
   schedule: require('./schedule'),
 }
 
-var current = []
-
 function display(data) {
   var exists = document.getElementById(data.graphic.name)
 
-  if (exists) {
-    exists.tag.remove()
-    exists.remove()
-
-    current.splice(current.indexOf(data.graphic.name), 1)
-  }
-  current.push(data.graphic.name)
-
   var engine = data.graphic.engine
 
+  if (exists) {
+    exists.innerHtml = data.html
+    exists.tag.innerHtml = data.css
+
+    engines[engine].update(data)
+    return
+  }
+
   if (engines[engine]) {
-    engines[engine](data)
+    engines[engine].init(data)
   }
 }
 
@@ -32,8 +30,6 @@ socket.on('client.hide', function (data) {
   var exists = document.getElementById(data.name)
 
   if (exists) {
-    current.splice(current.indexOf(data.name), 1)
-
     exists.classList.remove('root-element-display')
 
     window.setTimeout(function () {

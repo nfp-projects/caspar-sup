@@ -1,0 +1,168 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+  html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed, 
+  figure, figcaption, footer, header, hgroup, 
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+  }
+  /* HTML5 display-role reset for older browsers */
+  article, aside, details, figcaption, figure, 
+  footer, header, hgroup, menu, nav, section {
+    display: block;
+  }
+  body {
+    line-height: 1;
+  }
+  ol, ul {
+    list-style: none;
+  }
+  blockquote, q {
+    quotes: none;
+  }
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+    content: '';
+    content: none;
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  input {
+    font-size: 16px;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+body {
+  background: #3f3f41;
+  color: #eb6e00;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  font-family: Helvetica, sans-serif, Arial;
+}
+
+$header-size = 2.3em;
+
+#container {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  flex-grow: 2;
+  
+  h3 {
+    background: black;
+    font-size: $header-size;
+    line-height: ($header-size);
+    color: #eb6e00;
+    height: ($header-size);
+    overflow: hidden;
+    padding: 0 0.3em;
+    flex-grow: 2;
+    border-radius: 5px 0 0 5px;
+    word-break: break-all;
+  }
+  
+  button {
+    border: none;
+    color: black;
+    background: #eb6e00;
+    font-size: 2em;
+    width: 80px;
+    flex-shrink: 0;
+    border-radius: 0 5px 5px 0;
+  }
+  
+  .item {
+    display: flex;
+    margin: 5px;
+  }
+  
+  .empty {
+    flex-grow: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+    font-size: 2em;
+  }
+}
+
+header {
+  display: flex;
+  margin-bottom: 5px;
+  color: #ccc;
+  
+  h2 {
+    font-size: 3em;
+    line-height: 64px;
+    padding: 0 0.3em;
+    flex-grow: 2;
+  }
+  
+  .status {
+    padding: 0 20px 0 30px;
+    line-height: 64px;
+    font-size: 2em;
+    color: $header-color;
+    text-align: left;
+    position: relative;
+    
+    &::after {
+      position: absolute;
+      left: 0;
+      top: calc(50% - 7px);
+      content: '';
+      border: 10px solid #ec5840;
+    }
+    
+    &.green::after {
+      border-color: #00FF00;
+    }
+  }
+}
+
+.disconnected {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  font-size: 3em;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}

@@ -73,10 +73,11 @@ shelf.createModel = (attr, opts) => {
         .fetch({ require, withRelated })
     },
 
-    getAll(where = {}, withRelated = []) {
+    getAll(where = {}, withRelated = [], orderBy = 'id') {
       where.is_deleted = false
 
       return this.query({ where })
+        .orderBy(orderBy, 'ASC')
         .fetchAll({ withRelated })
     },
   })
