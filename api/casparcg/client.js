@@ -26,7 +26,7 @@ export async function connect() {
   casparIsConnected = false
   logger.info('CasparCG: Connectiong to', currentHost + ':' + 5250)
 
-  if (connection) {
+  if (connection && connection.close) {
     await connection.close()
   }
 
