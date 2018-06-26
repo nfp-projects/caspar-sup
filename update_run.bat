@@ -1,4 +1,4 @@
-git pull master
+git pull
 CALL npm install
 CALL npm run build
 CALL npm run start:win
