@@ -1,7 +1,6 @@
 git pull
 npm install
-npm run build
-npm start | bunyan
+npm run prod-run | bunyan
 echo.
 echo EXITED
 echo.
