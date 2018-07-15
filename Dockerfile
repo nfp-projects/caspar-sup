@@ -1,15 +1,40 @@
-FROM node:slim
+###########################
+# Mithril
+###########################
+FROM node:8-alpine as build
 
 ENV HOME=/app
 
 COPY package.json $HOME/
+COPY app $HOME/app
+COPY public $HOME/public
 
 WORKDIR $HOME
 
-RUN npm install
+RUN apk add --no-cache make gcc g++ python && \
+    npm install && \
+    npm run build
 
-COPY . $HOME/
+###########################
+# Server
+###########################
+FROM node:8-alpine
 
-EXPOSE 4011
+ENV HOME=/app
+
+COPY .babelrc config.js log.js index.js package.json $HOME/
+
+WORKDIR $HOME
+
+RUN apk add --no-cache make gcc g++ python && \
+    npm install --production
+
+COPY api $HOME/api
+COPY migrations $HOME/migrations
+COPY config $HOME/config
+COPY script $HOME/script
+COPY --from=build /app/public $HOME/public
+
+EXPOSE 3000
 
 CMD ["npm", "start"]

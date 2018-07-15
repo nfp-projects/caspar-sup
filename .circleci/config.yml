@@ -10,11 +10,6 @@ jobs:
       - run:
           name: Build docker image
           command: docker build -t nfpis/caspar-sup:build_${CIRCLE_BUILD_NUM} -t nfpis/caspar-sup:${CIRCLE_SHA1} -t nfpis/caspar-sup:latest .
-      - run:
-          name: Run test and lint
-          command: |
-            docker run nfpis/recording_control npm run lint
-            docker run nfpis/recording_control npm run test
       - deploy:
           name: Push to docker
           command: |

@@ -3,9 +3,8 @@
 'use strict'
 
 const _ = require('lodash')
-const appRoot = require('app-root-path')
-const config = require(appRoot.resolve('/config'))
-let log = require(appRoot.resolve('/log')).default
+const config = require('../config')
+let log = require('../log').default
 
 // This is important for setup to run cleanly.
 let knexConfig = _.cloneDeep(config.get('knex'))
@@ -17,7 +16,7 @@ log.info(knexConfig, 'Connected to database')
 
 let setup = module.exports = () =>
   knex.migrate.latest({
-    directory: appRoot.resolve('/migrations'),
+    directory: './migrations',
   })
   .then((result) => {
     if (result[1].length === 0) {
