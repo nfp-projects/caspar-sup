@@ -55,7 +55,7 @@ exports.settings = function(module, graphic) {
     m('p.graphic-helper', `<div id="${graphic.name}">`),
     m('textarea#graphic-html', {
       rows: '4',
-      oninput: module.updated.bind(null, 'settings.html'),
+      oninput: module.updated.bind(module, 'settings.html'),
       value: graphic.settings.html || '',
     }),
     m('p.graphic-helper.bottom', `</div>`),
@@ -65,7 +65,7 @@ exports.settings = function(module, graphic) {
     m('p.graphic-helper', '<style type="text/css">'),
     m('textarea#graphic-css', {
       rows: '4',
-      oninput: module.updated.bind(null, 'settings.css'),
+      oninput: module.updated.bind(module, 'settings.css'),
       value: graphic.settings.css || '',
     }),
     m('p.graphic-helper.bottom', '</style>'),

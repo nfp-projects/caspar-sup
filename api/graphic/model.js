@@ -23,7 +23,7 @@ const Graphic = bookshelf.createModel({
       attributes.settings = JSON.parse(attributes.settings)
     }
     return attributes
-  }
+  },
 }, {
 })
 

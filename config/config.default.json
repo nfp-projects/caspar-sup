@@ -18,6 +18,7 @@
       "filename" : "./db.sqlite"
     },
     "migrations": {
-    }
+    },
+    "useNullAsDefault": true
   }
 }

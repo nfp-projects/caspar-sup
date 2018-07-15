@@ -46,11 +46,11 @@
   "dependencies": {
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-register": "^6.26.0",
-    "bookshelf": "^0.13.3",
+    "bookshelf": "^0.11.1",
     "bunyan": "^1.8.12",
     "casparcg-connection": "4.1.0",
     "ip": "^1.1.5",
-    "knex": "^0.14.2",
+    "knex": "^0.12.9",
     "koa": "^2.4.1",
     "koa-better-serve": "^2.0.7",
     "koa-socket": "^4.4.0",
