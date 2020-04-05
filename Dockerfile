@@ -1,7 +1,7 @@
 ###########################
 # Mithril
 ###########################
-FROM node:8-alpine as build
+FROM node:13-alpine as build
 
 ENV HOME=/app
 
@@ -19,7 +19,7 @@ RUN apk add --no-cache make gcc g++ python && \
 ###########################
 # Server
 ###########################
-FROM node:8-alpine
+FROM node:13-alpine
 
 ENV HOME=/app
 
