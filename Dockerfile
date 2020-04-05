@@ -13,6 +13,7 @@ WORKDIR $HOME
 
 RUN apk add --no-cache make gcc g++ python && \
     npm install && \
+    apk del make gcc g++ python && \
     npm run build
 
 ###########################

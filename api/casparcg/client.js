@@ -1,8 +1,7 @@
 import Settings from '../settings/model'
-import { address } from 'ip'
 import { CasparCG, AMCP } from 'casparcg-connection'
 
-const timeoutDuration = 60000
+const timeoutDuration = 5000
 
 let io
 let logger
@@ -10,7 +9,6 @@ let logger
 let connection
 let casparIsPlaying
 let casparIsConnected
-let checkTimeout
 let currentHost
 
 export async function initialise(log, socket) {
@@ -36,27 +34,23 @@ export async function connect() {
     queueMode: 2,
     autoReconnectInterval: timeoutDuration,
     onError: err => {
-      logger.error('CasparCG: Error', err.message)
+      logger.error(err, 'CasparCG: Error')
     },
     onConnectionStatus: data => {
       casparIsConnected = data.connected
 
-      if (!data.connected) {
-        casparIsPlaying = false
-        logger.warn('CasparCG: connection closed, retrying in 60 seconds', connection.connected)
+      if (!casparIsConnected) {
+        logger.warn(`CasparCG: connection down, retrying in ${timeoutDuration / 1000} seconds`)
         io.emit('casparcg.status', currentStatus())
-        if (checkTimeout) clearInterval(checkTimeout)
-        checkTimeout = null
       }
     },
     onConnected: async connected => {
       logger.info('CasparCG: connected', connected)
-      io.emit('casparcg.status', currentStatus())
-      checkClientPlaying(false, true)
-
-      // Run our check on hourly interval
-      if (checkTimeout) clearInterval(checkTimeout)
-      checkTimeout = setInterval(() => checkClientPlaying(), timeoutDuration * 60)
+      if (!casparIsPlaying) {
+        startPlaying().then()
+      } else {
+        logger.warn('CasparCG: Stopped from starting play again.')
+      }
     },
   })
 }
@@ -69,52 +63,40 @@ export function currentStatus(e) {
   }
 }
 
-export async function checkClientPlaying(starting = false, first = false) {
-  let ip
-  if (currentHost === 'localhost' || currentHost === '127.0.0.1') {
-    ip = 'localhost'
-  } else {
-    ip = address()
-  }
+export async function startPlaying() {
+  let ip = 'localhost'
 
   // Check if we lost connection while attempting to start playing
   if (!connection.connected) {
     logger.error('CasparCG: Attempted to play but connection was lost')
   }
 
+  let success = false
+
   try {
-    // Check if we're already playing
-    let output = await connection.info(1, 100)
-
-    if (output.response.data.status !== 'playing') {
-      casparIsPlaying = false
-
-      if (starting) {
-        // We are not playing, check to see if we've already attempted
-        // to issue a play command and delay trying for a minute
-        await new Promise(res => {
-          logger.warn('CasparCG: Play did not start playing, retrying in 60 seconds')
-          setTimeout(res, timeoutDuration)
-        })
-      }
-
-      // Send a play command and retry checking again
-      logger.info(`CasparCG: Sending play command for ${ip}:3000`)
-      await connection.do(new AMCP.CustomCommand(`PLAY 1-100 [HTML] "http://${ip}:3000/client.html" CUT 1 LINEAR RIGHT`))
-      return checkClientPlaying(true)
+    // Send a play command
+    let command = `PLAY 1-100 [HTML] "http://${ip}:3000/client.html" CUT 1 LINEAR RIGHT`
+    logger.info(`CasparCG Command: ${command}`)
+    await connection.do(new AMCP.CustomCommand(command))
+    success = true
+  } catch (e) {
+    // Weird error where it throws an error despite a successful play command on reconnect
+    if (e && e.responseProtocol && e.responseProtocol.code >= 200 && e.responseProtocol.code < 300) {
+      success = true
+    } else {
+      logger.error(e, 'CasparCG: Error starting play on client')
     }
+  }
 
+  if (success) {
     casparIsPlaying = true
 
     // We are playing, notify all clients
     io.emit('casparcg.status', currentStatus())
-    if (starting || first) {
-      logger.info('CasparCG: client is up and playing')
-    }
-  } catch (e) {
+    logger.info('CasparCG: client is up and playing')
+  } else {
     // Unknown error occured
-    casparIsPlaying = true
-    logger.error(e, 'CasparCG: Error starting play on client')
+    casparIsPlaying = false
     io.emit('casparcg.status', currentStatus(e))
   }
 }
