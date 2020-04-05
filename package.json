@@ -9,8 +9,8 @@
     "build:js": "asbundle app/main/index.js ../../../public/main.js && asbundle app/client/index.js public/client.js && asbundle app/status/index.js ../../public/status.js",
     "watch:js": "nodemon --watch app --exec \"npm run build:js\"",
     "watch:server": "nodemon --watch api index.js | bunyan -o short",
-    "start": "node index.js",
-    "start:win": "node index.js | bunyan",
+    "start": "node index.js | bunyan -o short",
+    "start:win": "node index.js | bunyan -o short",
     "dev": "run-p watch:styl watch:js watch:server",
     "prod-run": "npm run build:js && npm run build-client:js && npm run build-status:js && npm run build:styl && npm run build-client:styl && npm run build-status:styl && npm start",
     "build": "npm run build:js && npm run build:styl",
@@ -53,8 +53,8 @@
     "asbundle": "^2.6.0",
     "dragula": "^3.7.2",
     "mithril": "^1.1.5",
-    "npm-run-all": "^4.1.2",
     "nodemon": "^2.0.2",
+    "npm-run-all": "^4.1.2",
     "run-p": "0.0.0",
     "stylus": "^0.54.7"
   }
