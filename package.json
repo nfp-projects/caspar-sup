@@ -34,11 +34,8 @@
   },
   "homepage": "https://github.com/nfp-projects/caspar-sup#readme",
   "dependencies": {
-    "bookshelf": "^0.11.1",
     "bunyan": "^1.8.12",
     "casparcg-connection": "4.9.0",
-    "ip": "^1.1.5",
-    "knex": "^0.12.9",
     "koa": "^2.4.1",
     "koa-better-serve": "^2.0.7",
     "koa-socket": "^4.4.0",
@@ -46,7 +43,6 @@
     "lowdb": "^1.0.0",
     "nconf": "^0.9.1",
     "socket.io": "^2.3.0",
-    "sqlite3": "^4.1.1",
     "tslib": "^1.11.1"
   },
   "devDependencies": {

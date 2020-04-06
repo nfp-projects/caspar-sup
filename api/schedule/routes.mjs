@@ -1,11 +1,8 @@
-import Schedule from './model.mjs'
-
 export async function all(ctx) {
   let graphics = ctx.db.get('graphics')
   let data = ctx.db.get('schedule').forEach(function(s) {
     s.graphic = graphics.getById(s.graphic_id).value()
   }).sortBy('sort').value()
-  // let data = await Schedule.getAll({ }, ['graphic'], 'sort')
 
   ctx.io.emit('schedule.all', data)
   total(ctx)
@@ -34,21 +31,26 @@ export async function add(ctx, payload) {
 }
 
 export async function patch(ctx, payload) {
-  await Promise.all(payload.map(async item => {
-    let scheduleItem = await Schedule.getSingle(item.id)
+  let schedule = ctx.db.get('schedule')
 
-    scheduleItem.set({ sort: item.sort })
+  schedule.forEach(function(item) {
+    schedule.updateById(Number(item.id), { sort: item.sort })
+  })
 
-    await scheduleItem.save()
-  }))
+  await schedule.write()
 
   await all(ctx)
 }
 
 export async function remove(ctx, payload) {
-  let scheduleItem = await Schedule.getSingle(payload.id)
+  let schedule = ctx.db.get('schedule')
+  let schedItem = schedule.removeById(Number(payload.id)).value()
+  await schedule.write()
 
-  await scheduleItem.destroy()
+  schedItem.deleted_at = new Date().getTime()
+  schedItem.type = 'schedule'
+
+  await ctx.db.get('trash').insert(schedItem).write()
 
   await all(ctx)
 }
