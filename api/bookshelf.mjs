@@ -1,9 +1,9 @@
-import _ from 'lodash'
 import knex from 'knex'
 import bookshelf from 'bookshelf'
 
-import config from '../config'
-import log from '../log'
+import defaults from './defaults.mjs'
+import config from './config.mjs'
+import log from './log.mjs'
 
 let host = config.get('knex:connection')
 
@@ -28,7 +28,7 @@ let shelf = bookshelf(client)
 // Helper method to create models
 shelf.createModel = (attr, opts) => {
   // Create default attributes to all models
-  let attributes = _.defaults(attr, {
+  let attributes = defaults(attr, {
     /**
      * Initialize a new instance of model. This does not get called when
      * relations to this model is being fetched though.
@@ -55,7 +55,7 @@ shelf.createModel = (attr, opts) => {
   })
 
   // Create default options for all models
-  let options = _.defaults(opts, {
+  let options = defaults(opts, {
     /**
      * Create new model object in database.
      *

@@ -3,17 +3,17 @@
   "version": "1.0.0",
   "description": "CasparCG superimposed graphics project",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "build:styl": "stylus -m app/styl/main.styl --out public && stylus -m app/styl/client.styl --out public && stylus -m app/styl/status.styl --out public",
-    "watch:styl": "stylus -w -m app/styl/main.styl app/styl/client.styl app/styl/status.styl  --out public",
-    "build:js": "asbundle app/main/index.js ../../../public/main.js && asbundle app/client/index.js public/client.js && asbundle app/status/index.js ../../public/status.js",
-    "watch:js": "nodemon --watch app --exec \"npm run build:js\"",
-    "watch:server": "nodemon --watch api index.js | bunyan -o short",
-    "start": "node index.js | bunyan -o short",
-    "start:win": "node index.js | bunyan -o short",
-    "dev": "run-p watch:styl watch:js watch:server",
-    "prod-run": "npm run build:js && npm run build-client:js && npm run build-status:js && npm run build:styl && npm run build-client:styl && npm run build-status:styl && npm start",
-    "build": "npm run build:js && npm run build:styl",
+    "js:build:main": "asbundle app/main/index.js public/main.js",
+    "js:build:client": "asbundle app/client/index.js public/client.js",
+    "js:build:status": "asbundle app/status/index.js public/status.js",
+    "js:watch": "nodemon --watch app --exec \"npm run build\"",
+    "start:watch": "nodemon --experimental-modules --watch api index.mjs | bunyan -o short",
+    "start": "node --experimental-modules index.mjs | bunyan -o short",
+    "start:win": "node --experimental-modules index.mjs | bunyan -o short",
+    "dev": "run-p js:watch start:watch",
+    "build": "run-p js:build:main js:build:client js:build:status",
     "docker": "docker run -it --rm --name my-running-script -p 3000:3000 -v \"%cd%\":/usr/src/app -w /usr/src/app node",
     "docker:install": "npm run docker -- npm install",
     "docker:dev": "npm run docker -- npm run dev"
@@ -34,8 +34,6 @@
   },
   "homepage": "https://github.com/nfp-projects/caspar-sup#readme",
   "dependencies": {
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
-    "babel-register": "^6.26.0",
     "bookshelf": "^0.11.1",
     "bunyan": "^1.8.12",
     "casparcg-connection": "4.9.0",
@@ -44,18 +42,19 @@
     "koa": "^2.4.1",
     "koa-better-serve": "^2.0.7",
     "koa-socket": "^4.4.0",
+    "lodash.template": "^4.5.0",
+    "lowdb": "^1.0.0",
     "nconf": "^0.9.1",
     "socket.io": "^2.3.0",
     "sqlite3": "^4.1.1",
     "tslib": "^1.11.1"
   },
   "devDependencies": {
-    "asbundle": "^2.6.0",
+    "asbundle": "TheThing/asbundle",
     "dragula": "^3.7.2",
     "mithril": "^1.1.5",
     "nodemon": "^2.0.2",
     "npm-run-all": "^4.1.2",
-    "run-p": "0.0.0",
-    "stylus": "^0.54.7"
+    "run-p": "0.0.0"
   }
 }

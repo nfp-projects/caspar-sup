@@ -1,14 +1,12 @@
-import Graphic from './model'
-
 /*
  * Event: 'graphic.all'
  *
  * Request all graphics in store
  */
 export async function all(ctx) {
-  let data = await Graphic.getAll()
+  let data = ctx.db.get('graphics').value()
 
-  ctx.socket.emit('graphic.all', data.toJSON())
+  ctx.socket.emit('graphic.all', data)
 }
 
 /*
@@ -22,9 +20,9 @@ export async function single(ctx, data) {
     return
   }
 
-  let graphic = await Graphic.getSingle(data.id)
+  let graphic = ctx.db.get('graphics').getById(Number(data.id)).value()
 
-  ctx.socket.emit('graphic.single', graphic.toJSON())
+  ctx.socket.emit('graphic.single', graphic)
 }
 
 /*
@@ -37,16 +35,17 @@ export async function single(ctx, data) {
  */
 export async function create(ctx, data) {
   data.settings = {}
-  data.is_deleted = false
 
   if (data.engine === 'countdown') {
     data.settings.html = `<span id="${data.name}-countdown-timer">countdown appears here</span>`
     data.settings.main = '<%- text %> - <%- finished %>'
   }
 
-  let graphic = await Graphic.create(data)
-  
-  ctx.io.emit('graphic.single', graphic.toJSON())
+  let graphics = ctx.db.get('graphics').insert(data)
+  let graphic = graphics.last().value()
+  await graphics.write()
+
+  ctx.io.emit('graphic.single', graphic)
 }
 
 /*
@@ -62,12 +61,16 @@ export async function remove(ctx, data) {
     return
   }
 
-  let graphic = await Graphic.getSingle(data.id)
-  graphic.set({ is_deleted: true })
-  await graphic.save()
+  let graphics = ctx.db.get('graphics')
+  let graphic = graphics.removeById(Number(data.id)).value()
+  await graphics.write()
 
-  let output = await Graphic.getAll()
-  ctx.io.emit('graphic.all', output.toJSON())
+  graphic.deleted_at = new Date().getTime()
+  graphic.type = 'graphic'
+
+  await ctx.db.get('trash').insert(graphic).write()
+
+  ctx.io.emit('graphic.all', graphics)
 }
 
 /*
@@ -86,11 +89,9 @@ export async function update(ctx, data) {
     return
   }
 
-  let graphic = await Graphic.getSingle(data.id)
+  await ctx.db.get('graphics').updateById(Number(data.id), data).write()
 
-  graphic.set(data)
+  let graphic = ctx.db.get('graphics').getById(Number(data.id)).value()
 
-  await graphic.save()
-
-  ctx.io.emit('graphic.single', graphic.toJSON())
+  ctx.io.emit('graphic.single', graphic)
 }

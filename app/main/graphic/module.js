@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const m = require('mithril')
 const createModule = require('../common/module')
-const socket = require('../../socket')
+const socket = require('../../shared/socket')
 const view = require('./view')
 const dragula = require('dragula')
 

@@ -1,5 +1,7 @@
-import Settings from '../settings/model'
-import { CasparCG, AMCP } from 'casparcg-connection'
+import CasparConnection from 'casparcg-connection'
+
+const CasparCG = CasparConnection.CasparCG
+const AMCP = CasparConnection.AMCP
 
 const timeoutDuration = 5000
 
@@ -11,22 +13,19 @@ let casparIsPlaying
 let casparIsConnected
 let currentHost
 
-export async function initialise(log, socket) {
+export function initialise(log, db, socket) {
   io = socket.socket
   logger = log
+  db = db
 
-  return connect()
+  connect(db)
 }
 
-export async function connect() {
-  currentHost = await Settings.getValue('casparcg')
+export function connect(db) {
+  currentHost = db.get('settings').value().casparhost
   casparIsPlaying = false
   casparIsConnected = false
   logger.info('CasparCG: Connectiong to', currentHost + ':' + 5250)
-
-  if (connection && connection.close) {
-    await connection.close()
-  }
 
   connection = new CasparCG({
     host: currentHost,
@@ -37,6 +36,7 @@ export async function connect() {
       logger.error(err, 'CasparCG: Error')
     },
     onConnectionStatus: data => {
+      if (casparIsPlaying) return
       casparIsConnected = data.connected
 
       if (!casparIsConnected) {
@@ -45,9 +45,10 @@ export async function connect() {
       }
     },
     onConnected: async connected => {
+      if (casparIsPlaying) return
       logger.info('CasparCG: connected', connected)
       if (!casparIsPlaying) {
-        startPlaying().then()
+        startPlaying(db).then()
       } else {
         logger.warn('CasparCG: Stopped from starting play again.')
       }
@@ -63,8 +64,8 @@ export function currentStatus(e) {
   }
 }
 
-export async function startPlaying() {
-  let ip = 'localhost'
+export async function startPlaying(db) {
+  let ip = db.get('settings').value().casparplayhost
 
   // Check if we lost connection while attempting to start playing
   if (!connection.connected) {
@@ -75,7 +76,7 @@ export async function startPlaying() {
 
   try {
     // Send a play command
-    let command = `PLAY 1-100 [HTML] "http://${ip}:3000/client.html" CUT 1 LINEAR RIGHT`
+    let command = `PLAY 1-100 [HTML] "http://${ip}/client.html" CUT 1 LINEAR RIGHT`
     logger.info(`CasparCG Command: ${command}`)
     await connection.do(new AMCP.CustomCommand(command))
     success = true
@@ -94,6 +95,12 @@ export async function startPlaying() {
     // We are playing, notify all clients
     io.emit('casparcg.status', currentStatus())
     logger.info('CasparCG: client is up and playing')
+    /* console.log(connection)
+    for (var key in connection) {
+      console.log(key, '=', typeof(connection[key]))
+    } */
+    connection.autoConnect = false
+    // connection.close()
   } else {
     // Unknown error occured
     casparIsPlaying = false

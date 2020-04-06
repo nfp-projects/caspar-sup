@@ -1,4 +1,4 @@
-const socket = require('../socket')
+const socket = require('../shared/socket')
 const m = require('mithril')
 
 const Status = {

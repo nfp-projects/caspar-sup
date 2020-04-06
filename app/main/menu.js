@@ -1,6 +1,6 @@
 const m = require('mithril')
 const createModule = require('./common/module')
-const socket = require('../socket')
+const socket = require('../shared/socket')
 
 const Menu = createModule({
   init: function() {
@@ -22,7 +22,7 @@ const Menu = createModule({
 
   saveNewHost() {
     socket.emit('settings.update', {
-      name: 'casparcg',
+      name: 'casparhost',
       value: this.newHost,
     })
 
@@ -53,7 +53,7 @@ const Menu = createModule({
     m('h5.header.header--space', 'CasparCG Status'),
     m('input[type=text]', {
       placeholder: 'Host IP',
-      value: this.newHost || this.settings.casparcg || '',
+      value: this.newHost || this.settings.casparhost || '',
       oninput: control => this.setHost(control.target.value),
     }),
     this.enableEdit && m('button', {

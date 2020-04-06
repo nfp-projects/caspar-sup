@@ -1,7 +1,7 @@
 const m = require('mithril')
 const _ = require('lodash')
 const store = require('../store')
-const socket = require('../../socket')
+const socket = require('../../shared/socket')
 const dragula = require('dragula')
 
 function createModule(component, view) {

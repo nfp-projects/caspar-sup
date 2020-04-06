@@ -1,7 +1,5 @@
-import _ from 'lodash'
-
 export function register(ctx, name, method) {
-  if (_.isPlainObject(method)) {
+  if (typeof(method) === 'object') {
     Object.keys(method).forEach(key => {
       register(ctx, [name, key].join('.'), method[key])
     })

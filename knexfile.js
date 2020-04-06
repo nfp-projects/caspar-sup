@@ -1,6 +1,3 @@
-'use strict'
-require('babel-register')
-
 const _ = require('lodash')
 const config = require('./config')
 

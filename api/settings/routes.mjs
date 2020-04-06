@@ -1,5 +1,4 @@
-import Settings from './model'
-import { connect } from '../casparcg/client'
+import { connect } from '../casparcg/client.mjs'
 
 /*
  * Event: 'settings.all'
@@ -7,7 +6,7 @@ import { connect } from '../casparcg/client'
  * Request all settings in store
  */
 export async function all(ctx) {
-  let data = await Settings.getSettings()
+  let data = ctx.db.get('settings').value()
 
   ctx.socket.emit('settings.all', data)
 }

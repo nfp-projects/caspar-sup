@@ -1,14 +1,11 @@
-'use strict'
-require('babel-register')
-
-let log = require('./log').default
+import log from './api/log.mjs'
+import setup from './api/setup.mjs'
 
 // Run the database script automatically.
 log.info('Running database integrity scan.')
-let setup = require('./script/setup')
 
 setup().then(() => {
-  require('./api/server')
+  import('./api/server.mjs')
 }).catch((error) => {
   log.error(error, 'Error while preparing database')
   process.exit(1)

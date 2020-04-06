@@ -1,6 +1,7 @@
-import bookshelf from '../bookshelf'
+import bookshelf from '../bookshelf.mjs'
+import Graphic from '../graphic/model.mjs'
 
-/* Preset model:
+/* Schedule model:
 {
   id,
   graphic_id,
@@ -10,8 +11,12 @@ import bookshelf from '../bookshelf'
 }
 */
 
-const Preset = bookshelf.createModel({
-  tableName: 'presets',
+const Schedule = bookshelf.createModel({
+  tableName: 'schedule',
+
+  graphic() {
+    return this.belongsTo(Graphic, 'graphic_id')
+  },
 
   format(attributes) {
     attributes.values = JSON.stringify(attributes.values)
@@ -27,4 +32,4 @@ const Preset = bookshelf.createModel({
 }, {
 })
 
-export default Preset
+export default Schedule

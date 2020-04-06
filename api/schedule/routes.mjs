@@ -1,32 +1,34 @@
-import Schedule from './model'
+import Schedule from './model.mjs'
 
 export async function all(ctx) {
-  let data = await Schedule.getAll({ }, ['graphic'], 'sort')
+  let graphics = ctx.db.get('graphics')
+  let data = ctx.db.get('schedule').forEach(function(s) {
+    s.graphic = graphics.getById(s.graphic_id).value()
+  }).sortBy('sort').value()
+  // let data = await Schedule.getAll({ }, ['graphic'], 'sort')
 
-  ctx.io.emit('schedule.all', data.toJSON())
+  ctx.io.emit('schedule.all', data)
   total(ctx)
 }
 
 export async function total(ctx) {
-  let data = await Schedule.getAll({ }, ['graphic'], 'sort')
+  let data = ctx.db.get('schedule').size()
 
-  ctx.io.emit('schedule.total', { total: data.length })
+  ctx.io.emit('schedule.total', { total: data })
 }
 
 export async function add(ctx, payload) {
-  payload.is_deleted = false
   payload.sort = 1
 
-  let last = await Schedule.query(q => {
-    q.orderBy('sort', 'desc')
-    q.limit(1)
-  }).fetch({ require: false })
+  let schedule = ctx.db.get('schedule')
+
+  let last = schedule.sortBy('sort').last().value()
 
   if (last) {
-    payload.sort = last.get('sort') + 1
+    payload.sort = last.sort + 1
   }
 
-  await Schedule.create(payload)
+  await schedule.insert(payload).write()
 
   await all(ctx)
 }

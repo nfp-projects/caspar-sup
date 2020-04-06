@@ -33,12 +33,6 @@ node_modules
 .node_repl_history
 
 db.sqlite
-public/client.css
-public/client.css.map
 public/client.js
-public/main.css
-public/main.css.map
 public/main.js
-public/status.css
-public/status.css.map
 public/status.js

@@ -1,10 +1,10 @@
-import _ from 'lodash'
 import bunyan from 'bunyan'
-import config from './config'
+import defaults from './defaults.mjs'
+import config from './config.mjs'
 
 // Clone the settings as we will be touching
 // on them slightly.
-let settings = _.cloneDeep(config.get('bunyan'))
+let settings = defaults(config.get('bunyan'), null)
 
 // Replace any instance of 'process.stdout' with the
 // actual reference to the process.stdout.

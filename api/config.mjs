@@ -1,6 +1,5 @@
-import _ from 'lodash'
 import nconf from 'nconf'
-const pckg = require('./package.json')
+import { readFileSync } from 'fs'
 
 // Helper method for global usage.
 nconf.inTest = () => nconf.get('NODE_ENV') === 'test'
@@ -18,8 +17,15 @@ nconf.argv()
 
 
 // Load package.json for name and such
-let project = _.pick(pckg, ['name', 'version', 'description', 'author', 'license', 'homepage'])
-
+let pckg = JSON.parse(readFileSync('./package.json'))
+let project = {
+  name: pckg.name,
+  version: pckg.version,
+  description: pckg.description,
+  author: pckg.author,
+  license: pckg.license,
+  homepage: pckg.homepage,
+}
 
 // If we have global.it, there's a huge chance
 // we're in test mode so we force node_env to be test.
@@ -57,4 +63,5 @@ if (typeof global.it === 'function' & !nconf.inTest()) {
   console.log('Critical: potentially running test on production enviroment. Shutting down.')
   process.exit(1)
 }
-module.exports = nconf
+
+export default nconf

@@ -12,7 +12,7 @@
 //in the console. 
 window.components = {}
 
-require('../socket')
+require('../shared/socket')
 require('./store')
 
 const m = require('mithril')

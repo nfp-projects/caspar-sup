@@ -1,5 +1,4 @@
-import _ from 'lodash'
-import Content from './model'
+import template from 'lodash.template'
 
 export const active = { }
 
@@ -14,13 +13,17 @@ function getSocket(ctx, all) {
  * Display a specific graphic content
  */
 export async function display(ctx, data) {
-  let compiled = _.template(data.graphic.settings.html)
+  let compiled = template(data.graphic.settings.html)
   let html = compiled(data.data)
 
-  let old = await Content.getSingle(data.graphic.name)
+  // let old = await Content.getSingle(data.graphic.name)
+
+  let playing = ctx.db.get('playing')
+
+  let old = playing.find({ name: data.graphic.name }).value()
 
   if (old) {
-    await old.destroy()
+    await playing.removeById(old.id).write()
   }
 
   let payload = {
@@ -32,9 +35,9 @@ export async function display(ctx, data) {
     is_deleted: false,
   }
 
-  let content = await Content.create(payload)
+  await playing.insert(payload).write()
 
-  ctx.io.emit('client.display', content.toJSON())
+  ctx.io.emit('client.display', playing.find({ name: data.graphic.name }).value())
 
   list(ctx, true)
 }
@@ -45,11 +48,13 @@ export async function display(ctx, data) {
  * Hide a specific graphic content
  */
 export async function hide(ctx, data) {
-  let content = await Content.getSingle(data.name)
+  let playing = ctx.db.get('playing')
 
-  if (!content) return
+  let old = playing.find({ name: data.name }).value()
 
-  await content.destroy()
+  if (!old) return
+
+  await playing.removeById(old.id).write()
 
   ctx.io.emit('client.hide', {
     name: data.name,
@@ -63,7 +68,7 @@ function generateDisplayText(item) {
   //   return `${item.data.text} - ${item.data.finished}`
   // }
   try {
-    return _.template(item.graphic.settings.main)(item.data)
+    return template(item.graphic.settings.main)(item.data)
   } catch (e) {
     return `Error creating display: ${e.message}`
   }
@@ -76,12 +81,14 @@ function generateDisplayText(item) {
  * Send a name list of all active graphics
  */
 export async function list(ctx, all) {
-  let allContent = await Content.getAll()
+  let allContent = ctx.db.get('playing').value()
 
-  let payload = await Promise.all(allContent.map(item => ({
-    name: item.get('name'),
-    display: generateDisplayText(item.toJSON()),
-  })))
+  let payload = await Promise.all(allContent.map(function(item) {
+    return {
+      name: item.name,
+      display: generateDisplayText(item),
+    }
+  }))
 
   getSocket(ctx, all).emit('content.list', payload)
 }
@@ -93,7 +100,7 @@ export async function list(ctx, all) {
  * Send actual graphics of all active graphics
  */
 export async function reset(ctx) {
-  let allContent = await Content.getAll()
+  let allContent = ctx.db.get('playing').value()
 
-  ctx.socket.emit('client.reset', allContent.toJSON())
+  ctx.socket.emit('client.reset', allContent)
 }

@@ -1,4 +1,4 @@
-var socket = require('../socket')
+var socket = require('../shared/socket')
 
 var engines = {
   text: require('./text'),

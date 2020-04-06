@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const socket = require('../socket')
+const socket = require('../shared/socket')
 const storage = {}
 const events = {}
 
