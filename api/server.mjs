@@ -33,7 +33,7 @@ lowdb().then(function(db) {
       }
 
       child[level]({
-        duration: (d2 - d1),
+        duration: requestTime,
         status: res.statusCode,
       }, `<-- ${req.method} ${req.url}`)
     }
