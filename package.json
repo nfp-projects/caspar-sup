@@ -34,10 +34,9 @@
   },
   "homepage": "https://github.com/nfp-projects/caspar-sup#readme",
   "dependencies": {
-    "bunyan": "^1.8.12",
     "bunyan-lite": "^1.0.1",
     "casparcg-connection": "4.9.0",
-    "lodash.template": "^4.5.0",
+    "lodash": "^4.5.0",
     "lowdb": "^1.0.0",
     "nconf": "^0.9.1",
     "node-static": "^0.7.11",
