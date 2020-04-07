@@ -22,7 +22,7 @@ FROM node:13-alpine
 
 ENV HOME=/app
 
-COPY .babelrc config.js log.js index.js package.json $HOME/
+COPY index.mjs package.json $HOME/
 
 WORKDIR $HOME
 
