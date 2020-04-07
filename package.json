@@ -11,7 +11,6 @@
     "js:watch": "nodemon --watch app --exec \"npm run build\"",
     "start:watch": "nodemon --experimental-modules --watch api index.mjs | bunyan -o short",
     "start": "node --experimental-modules index.mjs | bunyan -o short",
-    "start:win": "node --experimental-modules index.mjs | bunyan -o short",
     "dev": "run-p js:watch start:watch",
     "build": "run-p js:build:main js:build:client js:build:status",
     "docker": "docker run -it --rm --name my-running-script -p 3000:3000 -v \"%cd%\":/usr/src/app -w /usr/src/app node:alpine",
@@ -47,8 +46,6 @@
     "asbundle": "^2.6.1",
     "dragula": "^3.7.2",
     "mithril": "^1.1.5",
-    "nodemon": "^2.0.2",
-    "npm-run-all": "^4.1.2",
-    "run-p": "0.0.0"
+    "npm-run-all": "^4.1.2"
   }
 }
