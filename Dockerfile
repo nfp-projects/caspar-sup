@@ -11,10 +11,9 @@ COPY public $HOME/public
 
 WORKDIR $HOME
 
-RUN apk add --no-cache make gcc g++ python && \
-    npm install && \
-    apk del make gcc g++ python && \
-    npm run build
+RUN npm install && \
+    npm run build && \
+    rm -rf node_modules
 
 ###########################
 # Server
@@ -27,13 +26,10 @@ COPY .babelrc config.js log.js index.js package.json $HOME/
 
 WORKDIR $HOME
 
-RUN apk add --no-cache make gcc g++ python && \
-    npm install --production
+RUN npm install --production
 
 COPY api $HOME/api
-COPY migrations $HOME/migrations
 COPY config $HOME/config
-COPY script $HOME/script
 COPY --from=build /app/public $HOME/public
 
 EXPOSE 3000

@@ -1,4 +1,4 @@
-import template from 'lodash.template'
+import _ from 'lodash'
 
 export const active = { }
 
@@ -13,7 +13,7 @@ function getSocket(ctx, all) {
  * Display a specific graphic content
  */
 export async function display(ctx, data) {
-  let compiled = template(data.graphic.settings.html)
+  let compiled = _.template(data.graphic.settings.html)
   let html = compiled(data.data)
 
   // let old = await Content.getSingle(data.graphic.name)
@@ -68,7 +68,7 @@ function generateDisplayText(item) {
   //   return `${item.data.text} - ${item.data.finished}`
   // }
   try {
-    return template(item.graphic.settings.main)(item.data)
+    return _.template(item.graphic.settings.main)(item.data)
   } catch (e) {
     return `Error creating display: ${e.message}`
   }

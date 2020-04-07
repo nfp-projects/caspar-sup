@@ -33,6 +33,8 @@ node_modules
 .node_repl_history
 
 db.sqlite
+db.json
+package-lock.json
 public/client.js
 public/main.js
 public/status.js

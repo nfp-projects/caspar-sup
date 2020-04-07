@@ -14,7 +14,7 @@ let casparIsConnected
 let currentHost
 
 export function initialise(log, db, socket) {
-  io = socket.socket
+  io = socket
   logger = log
   db = db
 

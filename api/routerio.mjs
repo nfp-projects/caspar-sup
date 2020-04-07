@@ -11,8 +11,8 @@ import * as settings from './settings/routes.mjs'
 import * as schedule from './schedule/routes.mjs'
 
 function onConnection(server, db, data) {
-  const io = server.socket
-  const socket = data.socket
+  const io = server
+  const socket = data
   const log = logger.child({
     id: socket.id,
   })
