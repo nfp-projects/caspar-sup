@@ -14,7 +14,7 @@
     "start:win": "node --experimental-modules index.mjs | bunyan -o short",
     "dev": "run-p js:watch start:watch",
     "build": "run-p js:build:main js:build:client js:build:status",
-    "docker": "docker run -it --rm --name my-running-script -p 3000:3000 -v \"%cd%\":/usr/src/app -w /usr/src/app node",
+    "docker": "docker run -it --rm --name my-running-script -p 3000:3000 -v \"%cd%\":/usr/src/app -w /usr/src/app node:alpine",
     "docker:install": "npm run docker -- npm install",
     "docker:dev": "npm run docker -- npm run dev"
   },
@@ -35,18 +35,16 @@
   "homepage": "https://github.com/nfp-projects/caspar-sup#readme",
   "dependencies": {
     "bunyan": "^1.8.12",
+    "bunyan-lite": "^1.0.1",
     "casparcg-connection": "4.9.0",
-    "koa": "^2.4.1",
-    "koa-better-serve": "^2.0.7",
-    "koa-socket": "^4.4.0",
     "lodash.template": "^4.5.0",
     "lowdb": "^1.0.0",
     "nconf": "^0.9.1",
-    "socket.io": "^2.3.0",
+    "socket.io-serveronly": "^2.3.0",
     "tslib": "^1.11.1"
   },
   "devDependencies": {
-    "asbundle": "TheThing/asbundle",
+    "asbundle": "^2.6.1",
     "dragula": "^3.7.2",
     "mithril": "^1.1.5",
     "nodemon": "^2.0.2",

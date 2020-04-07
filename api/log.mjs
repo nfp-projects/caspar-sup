@@ -1,4 +1,4 @@
-import bunyan from 'bunyan'
+import bunyan from 'bunyan-lite'
 import defaults from './defaults.mjs'
 import config from './config.mjs'
 
