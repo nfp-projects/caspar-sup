@@ -41,9 +41,9 @@ export async function create(ctx, data) {
     data.settings.main = '<%- text %> - <%- finished %>'
   }
 
-  let graphics = ctx.db.get('graphics').insert(data)
+  let graphics = ctx.db.get('graphics')
+  await graphics.insert(data).write()
   let graphic = graphics.last().value()
-  await graphics.write()
 
   ctx.io.emit('graphic.single', graphic)
 }

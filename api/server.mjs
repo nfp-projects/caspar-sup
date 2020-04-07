@@ -45,7 +45,7 @@ lowdb().then(function(db) {
 
       fileServer.serve(req, res, function (err) {
         if (err) {
-          logger.error(err);
+          log.error(err);
 
           res.writeHead(err.status, err.headers);
           res.end(err.message);
