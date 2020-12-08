@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Install npm deployment app
-          command: sudo npm install -g github-release-cli
+          command: sudo npm install -g github-release-cli @babel/runtime 
       - run:
           name: Build client javascript
           command: |
@@ -36,3 +36,5 @@ workflows:
     jobs:
       - build:
           context: github-thething
+
+GITHUB_TOKEN  83479617c646020560b158b89fa87028c4c6aa84 
