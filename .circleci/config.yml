@@ -36,5 +36,3 @@ workflows:
     jobs:
       - build:
           context: github-thething
-
-GITHUB_TOKEN  83479617c646020560b158b89fa87028c4c6aa84 
