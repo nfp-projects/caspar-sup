@@ -1,7 +1,6 @@
-import logger from './log.mjs'
 import { register } from './io/helper.mjs'
 import { contentConnection } from './content/connection.mjs'
-import { casparConnection } from './casparcg/connection.mjs'
+import { casparStatus } from './casparcg/status.mjs'
 
 import * as content from './content/routes.mjs'
 import * as engine from './engine/routes.mjs'
@@ -10,7 +9,7 @@ import * as preset from './preset/routes.mjs'
 import * as settings from './settings/routes.mjs'
 import * as schedule from './schedule/routes.mjs'
 
-function onConnection(server, db, data) {
+function onConnection(server, db, logger, data) {
   const io = server
   const socket = data
   const log = logger.child({
@@ -20,7 +19,7 @@ function onConnection(server, db, data) {
   let ctx = { io, socket, log, db }
 
   contentConnection(ctx)
-  casparConnection(ctx)
+  casparStatus(ctx)
 
   register(ctx, 'content', content)
   register(ctx, 'engine', engine)

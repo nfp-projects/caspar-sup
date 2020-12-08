@@ -25,12 +25,12 @@ export async function update(ctx, data) {
     return
   }
 
-  await Settings.setValue(data.name, data.value)
+  await ctx.db.set('settings.' + data.name, data.value).write()
 
-  let output = await Settings.getSettings()
+  let output = ctx.db.get('settings').value()
   ctx.io.emit('settings.all', output)
 
-  if (data.name === 'casparcg') {
+  if (data.name.startsWith('caspar')) {
     connect()
   }
 }

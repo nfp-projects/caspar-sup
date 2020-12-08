@@ -9,13 +9,10 @@
     "js:build:client": "asbundle app/client/index.js public/client.js",
     "js:build:status": "asbundle app/status/index.js public/status.js",
     "js:watch": "nodemon --watch app --exec \"npm run build\"",
-    "start:watch": "nodemon --experimental-modules --watch api index.mjs | bunyan -o short",
+    "start:watch": "nodemon --watch api --watch runner.mjs --watch index.mjs runner.mjs | bunyan",
     "start": "node --experimental-modules index.mjs | bunyan -o short",
     "dev": "run-p js:watch start:watch",
-    "build": "run-p js:build:main js:build:client js:build:status",
-    "docker": "docker run -it --rm --name my-running-script -p 3000:3000 -v \"%cd%\":/usr/src/app -w /usr/src/app node:alpine",
-    "docker:install": "npm run docker -- npm install",
-    "docker:dev": "npm run docker -- npm run dev"
+    "build": "npm run js:build:main && npm run js:build:client && npm run js:build:status"
   },
   "repository": {
     "type": "git",
@@ -33,19 +30,16 @@
   },
   "homepage": "https://github.com/nfp-projects/caspar-sup#readme",
   "dependencies": {
-    "bunyan-lite": "^1.0.1",
-    "casparcg-connection": "4.9.0",
     "lodash": "^4.5.0",
-    "lowdb": "^1.0.0",
-    "nconf": "^0.9.1",
-    "node-static": "^0.7.11",
-    "socket.io-serveronly": "^2.3.0",
-    "tslib": "^1.11.1"
+    "node-static-lib": "^1.0.0",
+    "p3x-xml2json": "^2020.10.131",
+    "socket.io-serveronly": "^2.3.0"
   },
   "devDependencies": {
     "asbundle": "^2.6.1",
     "dragula": "^3.7.2",
-    "mithril": "^1.1.5",
-    "npm-run-all": "^4.1.2"
+    "mithril": "^2.0.4",
+    "npm-run-all": "^4.1.2",
+    "service-core": "^2.0.0"
   }
 }

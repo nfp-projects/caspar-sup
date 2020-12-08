@@ -45,7 +45,7 @@ export async function create(ctx, data) {
   await graphics.insert(data).write()
   let graphic = graphics.last().value()
 
-  ctx.io.emit('graphic.single', graphic)
+  ctx.io.emit('graphic.created', graphic)
 }
 
 /*

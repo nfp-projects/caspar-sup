@@ -7,10 +7,9 @@ exports.error = function(error) {
 }
 
 exports.presetOnlyList = function(module, graphic, title, color = 'green', button = 'Display now', schedule = 'Schedule') {
-  return [
-    m('label.graphic-label', { key: 'first' }, title),
+  return m('div', [
+    m('label.graphic-label', title),
     m('div.graphic-presetlist', {
-      key: `second-${graphic.id}`,
       oncreate: control => module.presetlistInit(control),
     },
       module.presets.map(item =>
@@ -37,10 +36,9 @@ exports.presetOnlyList = function(module, graphic, title, color = 'green', butto
     ),
     module.presets.length &&
       m('button.red.graphic-presetremove', {
-        key: 'third',
         onclick: () => (module.displayRemove = !module.displayRemove),
       }, 'Remove entries') || null,
-  ]
+  ])
 }
 
 exports.presetButtons = function(module, green, blue) {

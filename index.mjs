@@ -1,9 +1,5 @@
-import log from './api/log.mjs'
-
-// Run the database script automatically.
-log.info('Starting server.')
-
-import('./api/server.mjs').catch((error) => {
-  log.error(error, 'Error while starting server')
-  process.exit(1)
-})
+export function start(config, db, log, core, http, port) {
+  return import('./api/server.mjs').then(function(module) {
+    return module.run(config, db, log, core, http, port)
+  })
+}

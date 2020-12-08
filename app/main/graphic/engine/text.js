@@ -20,13 +20,15 @@ exports.view = function(module, graphic) {
   return [
     m('div.graphic-presetadd', [
       m('h3.graphic-presetadd-header', 'Create preset/display graphic'),
-      graphic.settings.properties.map((prop, index) => m.fragment({ key: `prop-${index}` }, [
-        m('label', { for: `preset-add-${index}` }, prop),
-        m(`input#preset-add-${index}[type=text]`, {
-          value: module.current[prop] || '',
-          oninput: module.updated.bind(module, prop, 'current'),
-        }),
-      ])),
+      m.fragment(
+        graphic.settings.properties.map((prop, index) => m.fragment({ key: `prop-${index}` }, [
+          m('label', { for: `preset-add-${index}` }, prop),
+          m(`input#preset-add-${index}[type=text]`, {
+            value: module.current[prop] || '',
+            oninput: module.updated.bind(module, prop, 'current'),
+          }),
+        ]))
+      ),
       components.presetButtons(module, 'Display live now', 'Add to preset list'),
     ]),
     components.presetOnlyList(module, graphic, 'Presets'),
@@ -105,7 +107,7 @@ exports.settings = function(module, graphic) {
     m('div.graphic-property', [
       m('input#graphic-newproperty[type=text]', {
         value: module.newProperty,
-        oninput: m.withAttr('value', val => (module.newProperty = val)),
+        oninput: (control) => { module.newProperty = control.target.value },
       }),
       m('button', {
         onclick: module.addProperty.bind(module),

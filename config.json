@@ -1,0 +1,9 @@
+{
+  "name": "caspar-sup",
+  "serviceName": "Caspar Sup",
+  "description": "Caspar Sup manager",
+  "port": 3000,
+  "managePort": 3001,
+  "appRepository": null,
+  "manageRepository": null
+}

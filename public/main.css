@@ -149,6 +149,12 @@ nav .status {
   position: relative;
   margin-left: 1.8em;
 }
+nav .status-error {
+  color: red;
+  font-size: 0.8rem;
+  text-align: center;
+  margin-top: 5px;
+}
 nav .status::after {
   position: absolute;
   left: 0;

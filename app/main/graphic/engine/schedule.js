@@ -105,7 +105,7 @@ exports.settings = function(module, graphic) {
     m('div.graphic-property', [
       m('input#graphic-newproperty[type=text]', {
         value: module.newProperty,
-        oninput: m.withAttr('value', val => (module.newProperty = val)),
+        oninput: (control) => { module.newProperty = control.target.value },
       }),
       m('button', {
         onclick: module.addProperty.bind(module),

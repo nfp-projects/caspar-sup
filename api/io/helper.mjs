@@ -7,7 +7,11 @@ export function register(ctx, name, method) {
   }
 
   ctx.socket.on(name, async (data) => {
-    ctx.log.info('Got event', name)
+    if (name.indexOf('list') > 0 || name.indexOf('all') || name.indexOf('total')) {
+      ctx.log.debug('Got event', name)
+    } else {
+      ctx.log.info('Got event', name)
+    }
 
     try {
       await method(ctx, data)
