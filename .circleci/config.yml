@@ -27,7 +27,7 @@ jobs:
               --owner $CIRCLE_PROJECT_USERNAME \
               --repo $CIRCLE_PROJECT_REPONAME \
               --tag "v${PACKAGE_VERSION}.${CIRCLE_BUILD_NUM}" \
-              --name "v${PACKAGE_VERSION}.${CIRCLE_BUILD_NUM}" \
+              --release-name "v${PACKAGE_VERSION}.${CIRCLE_BUILD_NUM}" \
               --body "Automatic CircleCI Build of v${PACKAGE_VERSION}.${CIRCLE_BUILD_NUM} from ${CIRCLE_SHA1}" \
               caspar_sup-sc.zip
 workflows:
